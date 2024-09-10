@@ -15,8 +15,8 @@ A prisons pickaxe core that I developed from 2019-2020. This was used on the Hyl
 - /tokens shop (open token shop)
 
 ## Admin Commands
-- /tokens add/set/remove <player> <amount>
-- /moonlightpickaxes give <player> <toolName> <amount>
+- /tokens add/set/remove [player] [amount]
+- /moonlightpickaxes give [player] [toolName (defaults to pickaxe)] [amount]
 
 
 ## Todo:
