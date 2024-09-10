@@ -1,5 +1,6 @@
 package net.hylustpickaxes.src.upgrades;
 
+import net.hylustpickaxes.src.Main;
 import net.hylustpickaxes.src.utils.ItemUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -46,7 +47,7 @@ public class UpgradeManager {
 
             upgrades.add(new Upgrade(maxLevel, name, costs, multipliers, values, icon, slot, functions, type));
         }
-        System.out.println(upgrades.size() + " Upgrades Loaded!");
+        Main.plugin.getLogger().info(upgrades.size() + " Upgrades Loaded!");
     }
 
     public Upgrade getUpgrade(String upgradeID)

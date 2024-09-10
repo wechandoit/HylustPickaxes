@@ -1,12 +1,13 @@
 package net.hylustpickaxes.src.tools;
 
 import net.hylustpickaxes.src.Main;
-import net.hylustpickaxes.src.nbt.NBT;
 import net.hylustpickaxes.src.upgrades.Upgrade;
 import net.hylustpickaxes.src.utils.ItemUtils;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
+
+import de.tr7zw.nbtapi.NBT;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,7 +20,6 @@ public class ToolManger {
     private static YamlConfiguration toolConfig = YamlConfiguration.loadConfiguration(file);
 
     public ToolManger() {
-
         retrieveData();
     }
 
@@ -49,33 +49,33 @@ public class ToolManger {
             //gen item
 
             ItemStack item = ItemUtils.getItemStackFromConfig(toolConfig, "item." + type);
-            NBT toolNBT = NBT.get(item);
-            toolNBT.setBoolean("Unbreakable", true);
-            toolNBT.setString("type", tokenName);
-            toolNBT.setString("isTool", "yes");
-            toolNBT.setInt("value", 0);
-            toolNBT.setString("totalSold", "0.0");
-            toolNBT.setString("multiplier", "1.0");
-
-            for (Upgrade upgrade : upgrades)
-            {
-                toolNBT.setInt("upgrade." + upgrade.getName(), 0);
-            }
-
-            item = toolNBT.apply(item);
+            
+            Main.plugin.getLogger().info(item.toString());
+            
+            NBT.modify(item, toolNBT -> {
+            	toolNBT.setBoolean("Unbreakable", true);
+                toolNBT.setString("type", tokenName);
+                toolNBT.setString("isTool", "yes");
+                toolNBT.setInteger("value", 0);
+                toolNBT.setString("totalSold", "0.0");
+                toolNBT.setString("multiplier", "1.0");
+                for (Upgrade upgrade : upgrades)
+                {
+                    toolNBT.setInteger("upgrade." + upgrade.getName(), 0);
+                }
+            });
 
             // create tool
             tools.add(new Tool(item, upgrades, tokenName));
             tokenTypes.add(tokenName);
         }
-        System.out.println(tools.size() + " tools loaded!");
+        Main.plugin.getLogger().info(tools.size() + " tools loaded!");
     }
 
     public Tool getTool(ItemStack itemStack)
     {
         if (tools.isEmpty() || tools == null) return null;
-        NBT nbt = NBT.get(itemStack);
-        String tokenName = nbt.getString("type");
+        String tokenName = NBT.get(itemStack, nbt -> (String) nbt.getString("type"));
         for (Tool tool : tools)
         {
             if (tool.getTokenName().equalsIgnoreCase(tokenName)) return tool;
@@ -97,7 +97,14 @@ public class ToolManger {
         List<Tool> pickList = new ArrayList<Tool>();
         if (tools.isEmpty() || tools == null) return null;
         for (Tool tool : tools) {
-            if (tool.getItem(0, 0, 0, null).getType().equals(Material.DIAMOND_PICKAXE) || tool.getItem(0, 0,0, null).getType().equals(Material.IRON_PICKAXE) || tool.getItem(0, 0, 0, null).getType().equals(Material.GOLD_PICKAXE) || tool.getItem(0, 0, 0, null).getType().equals(Material.STONE_PICKAXE) || tool.getItem(0, 0,0, null).getType().equals(Material.WOOD_PICKAXE)) {
+        	Material toolType = tool.getItem(0, 0, 0, null).getType();
+            if (toolType.equals(Material.NETHERITE_PICKAXE) ||
+            		toolType.equals(Material.DIAMOND_PICKAXE) || 
+            		toolType.equals(Material.IRON_PICKAXE) || 
+            		toolType.equals(Material.GOLDEN_PICKAXE) || 
+            		toolType.equals(Material.STONE_PICKAXE) ||
+            		toolType.equals(Material.WOODEN_PICKAXE)
+            	) {
                 pickList.add(tool);
             }
         }
@@ -107,8 +114,7 @@ public class ToolManger {
     public boolean isToolPickaxe(ItemStack itemStack)
     {
         if (getPickaxeList().isEmpty() || getPickaxeList() == null) return false;
-        NBT nbt = NBT.get(itemStack);
-        String tokenName = nbt.getString("type");
+        String tokenName = NBT.get(itemStack, nbt -> (String) nbt.getString("type"));
         for (Tool tool : getPickaxeList())
         {
             if (tool.getTokenName().equals(tokenName)) return true;
@@ -119,9 +125,7 @@ public class ToolManger {
     public boolean itemIsTool(ItemStack item)
     {
         if (tools.isEmpty() || tools == null || item == null) return false;
-        if (NBT.get(item) == null)
-            return false;
-        NBT nbt = NBT.get(item);
-        return nbt.getString("isTool").equals("yes");
+        boolean isTool = NBT.get(item, nbt -> (boolean) nbt.getString("isTool").equals("yes"));
+        return isTool;
     }
 }

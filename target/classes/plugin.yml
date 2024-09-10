@@ -1,10 +1,9 @@
 name: MoonlightPickaxes
 version: 1.0
 main: net.hylustpickaxes.src.Main
-authors: [DepressedChan]
-description: MoonlightPickaxes - Made by DepressedChan
-depend: [PlaceholderAPI, Vault]
-softdepend: [ShopGUIPlus, OreRegenerator, Quests]
+authors: [wechandoit]
+description: MoonlightPickaxes - Made by wechandoit
+api-version: 1.21
 commands:
   moonlightpickaxes:
     usage: /moonlightpickaxes

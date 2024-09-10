@@ -46,7 +46,7 @@ public enum EnchantNames
     VANISHING_CURSE(new String[] { "vanishing", "curseofvanishing" }),
     WATER_WORKER(new String[] { "aquaaffinity" });
 
-    private List<String> names = new ArrayList();
+    private List<String> names = new ArrayList<String>();
 
 
     EnchantNames(String... paramVarArgs1) { this.names.addAll(Arrays.asList(paramVarArgs1)); }

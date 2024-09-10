@@ -4,6 +4,8 @@ import net.hylustpickaxes.src.Main;
 import net.hylustpickaxes.src.utils.EnchantNames;
 import net.hylustpickaxes.src.utils.ItemUtils;
 import net.hylustpickaxes.src.utils.MiscUtils;
+import net.kyori.adventure.text.Component;
+
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -72,7 +74,7 @@ public class ShopManager {
             String name = "";
             String type = "ITEM";
             String enchant = "";
-            List<String> lore = new ArrayList<>();
+            List<Component> lore = new ArrayList<>();
             List<String> commands = new ArrayList<>();
             List<String> enchants = new ArrayList<>();
 
@@ -84,7 +86,10 @@ public class ShopManager {
                 data = Short.parseShort(itemsData.getString("shops." + s + ".damage"));
             name = itemsData.getString("shops." + s + ".name");
             if (itemsData.getStringList("shops." + s + ".lore") != null)
-                lore = itemsData.getStringList("shops." + s + ".lore");
+            	for (String str : itemsData.getStringList("shops." + s + ".lore"))
+            	{
+            		lore.add(MiscUtils.chat(str));
+            	}
 
             if (itemsData.getStringList("shops." + s + ".enchants") != null)
                 enchants = itemsData.getStringList("shops." + s + ".enchants");
@@ -100,15 +105,15 @@ public class ShopManager {
                 commands = itemsData.getStringList("shops." + s + ".commands");
             }
 
-            ItemStack itemStack = new ItemStack(material, amount, data);
+            ItemStack itemStack = new ItemStack(material, amount);
             if (enchants != null) {
                 for (String en : enchants) {
                     itemStack.addUnsafeEnchantment(EnchantNames.getEnchantment(en.split(":")[0]), Integer.parseInt(en.split(":")[1]));
                 }
             }
             ItemMeta meta = itemStack.getItemMeta();
-            if (name != null) meta.setDisplayName(MiscUtils.chat(name));
-            if (lore != null) meta.setLore(lore);
+            if (name != null) meta.displayName(MiscUtils.chat(name));
+            if (lore != null) meta.lore(lore);
             itemStack.setItemMeta(meta);
 
             ShopItem shopItem = new ShopItem(itemStack, price, slot);
@@ -118,14 +123,14 @@ public class ShopManager {
             }
             shopItems.add(shopItem);
 
-            ItemStack guiItem = ItemUtils.getItemStack(material, amount, data, name, lore);
+            ItemStack guiItem = ItemUtils.getItemStack(material, amount, name, lore);
             if (enchants != null) {
                 for (String en : enchants) {
                     guiItem.addUnsafeEnchantment(EnchantNames.getEnchantment(en.split(":")[0]), Integer.parseInt(en.split(":")[1]));
                 }
             }
             lore.add(MiscUtils.chat("&f&lPRICE: &f" + price + " coins"));
-            if (lore != null) meta.setLore(lore);
+            if (lore != null) meta.lore(lore);
             guiItem.setItemMeta(meta);
             
         }

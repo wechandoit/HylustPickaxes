@@ -1,14 +1,10 @@
 package net.hylustpickaxes.src.listener;
 
-import dev.mrshawn.oreregenerator.api.utils.RegenUtils;
-import net.brcdev.shopgui.ShopGuiPlusApi;
 import net.hylustpickaxes.src.Main;
 import net.hylustpickaxes.src.config.ConfigData;
 import net.hylustpickaxes.src.events.DropPickaxeLootEvent;
 import net.hylustpickaxes.src.events.TokensReceiveEvent;
-import net.hylustpickaxes.src.nbt.NBT;
 import net.hylustpickaxes.src.profiles.Profile;
-import net.hylustpickaxes.src.tasktypes.OreBreakTaskType;
 import net.hylustpickaxes.src.tools.Tool;
 import net.hylustpickaxes.src.upgrades.Upgrade;
 import net.hylustpickaxes.src.utils.MiscUtils;
@@ -26,29 +22,36 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import de.tr7zw.nbtapi.NBT;
+
 import java.util.*;
 
 public class MiningListener implements Listener {
+	
     private boolean mine(Player player, List<Block> oldBlockList) {
-        if (player.isDead() || player.getItemInHand() == null || player.getItemInHand().getType() == Material.AIR || NBT.get(player.getItemInHand()) == null)
-            return false;
-        ItemStack pickaxe = player.getItemInHand();
-        if (!Main.getToolManger().itemIsTool(pickaxe) || !Main.getToolManger().isToolPickaxe(pickaxe) || Main.getToolManger().getTool(pickaxe) == null)
-            return false;
+    	ItemStack mainHand = player.getInventory().getItemInMainHand();
+        if (player.isDead()
+        		|| mainHand == null
+        		|| mainHand.getType() == Material.AIR
+        		|| !Main.getToolManger().itemIsTool(mainHand) 
+        		|| !Main.getToolManger().isToolPickaxe(mainHand)
+        		|| Main.getToolManger().getTool(mainHand) == null
+        	) return false;
 
         Profile profile = Main.getProfileManager().getProfile(player);
-        Tool tool = Main.getToolManger().getTool(pickaxe);
-        NBT nbt = NBT.get(pickaxe);
+        Tool tool = Main.getToolManger().getTool(mainHand);
+        
+        NBT.modify(mainHand, nbt -> {
         List<Upgrade> upgrades = tool.getUpgrades();
 
-        HashMap<Upgrade, Integer> upgradeLevelMap = MiscUtils.getAllUpgradeLevels(upgrades, nbt);
+        HashMap<Upgrade, Integer> upgradeLevelMap = MiscUtils.getAllUpgradeLevels(upgrades, mainHand);
 
         int amount = 1;
         double multi = 0;
-        int value = nbt.getInt("value");
+        int value = nbt.getOrDefault("value", 0);
         double totalSold = Double.parseDouble(nbt.getString("totalSold"));
         boolean smelt = false;
-        boolean autoSell = false;
+//        boolean autoSell = false;
         boolean nuke = false;
         int fortune = 0;
         int experience = 0;
@@ -58,7 +61,7 @@ public class MiningListener implements Listener {
             if (MiscUtils.getOres().contains(block.getType())) {
                 for (Upgrade upgrade : upgradeLevelMap.keySet()) {
                     int level = upgradeLevelMap.get(upgrade);
-                    nbt.setInt("upgrade." + upgrade.getName(), level);
+                    nbt.setInteger("upgrade." + upgrade.getName(), level);
 
                     switch (upgrade.getType().toUpperCase()) {
                         case "TRENCH":
@@ -96,25 +99,10 @@ public class MiningListener implements Listener {
                             }
                             break;
                         case "EXPERIENCE":
-                            experience += Main.random.nextInt(upgrade.getValue(level).intValue());
+                        	if (upgrade.getValue(level).intValue() > 0) experience += Main.random.nextInt(upgrade.getValue(level).intValue());
                             break;
                         case "AUTOSMELT":
                             smelt = true;
-                            break;
-                        case "AUTOSELL":
-                            autoSell = true;
-                            break;
-                        case "CHARITY":
-                            if (MiscUtils.getBooleanFromWeightedChance(upgrade.getMultiplier(level), Main.random)) {
-                                for (Player p : Bukkit.getOnlinePlayers()) {
-                                    Main.getEconomy().depositPlayer(p, upgrade.getValue(level));
-                                }
-                            }
-                            break;
-                        case "MONEYFINDER":
-                            if (MiscUtils.getBooleanFromWeightedChance(upgrade.getMultiplier(level), Main.random)) {
-                                Main.getEconomy().depositPlayer(player, upgrade.getValue(level));
-                            }
                             break;
                         case "ERUPTION":
                             if (MiscUtils.getBooleanFromWeightedChance(upgrade.getMultiplier(level), Main.random)) {
@@ -128,11 +116,11 @@ public class MiningListener implements Listener {
                             break;
                         case "EXPLOSION":
                             if (MiscUtils.getBooleanFromWeightedChance(upgrade.getMultiplier(level), Main.random)) {
-                                TNTPrimed tnt = (TNTPrimed) player.getWorld().spawnEntity(block.getLocation(), EntityType.PRIMED_TNT);
+                                TNTPrimed tnt = (TNTPrimed) player.getWorld().spawnEntity(block.getLocation(), EntityType.TNT);
                                 tnt.setYield(4);
                                 tnt.setIsIncendiary(false);
                                 tnt.setCustomName(player.getName());
-                                OreBreakTaskType.getTntPrimedList().add(tnt);
+                                Main.tntPrimedList.add(tnt);
                             }
                             break;
                         case "FORTUNE":
@@ -154,19 +142,10 @@ public class MiningListener implements Listener {
             for (Block b : blockList) {
                 if (MiscUtils.getOres().contains(b.getType())) {
                     ItemStack loot = MiscUtils.getOreDrops(b.getType(), smelt, fortune);
-                    if (autoSell && Main.getInstance().hasShopGUIPlus()) {
-                        double cost = ShopGuiPlusApi.getItemStackPriceSell(loot);
-                        if (cost > 0) {
-                            totalSold += cost;
-                        }
-                        Main.getEconomy().depositPlayer(player, cost);
-                    } else {
-                        if (loot != null) {
-                            dropsList.add(loot.clone());
-                        }
+                    if (loot != null) {
+                        dropsList.add(loot.clone());
                     }
                     if (experience > 0) player.giveExp(experience);
-                    if (Main.getInstance().hasOreRegenerator()) regenBlock(b, 5, Material.STONE);
                     count++;
                 }
             }
@@ -174,10 +153,12 @@ public class MiningListener implements Listener {
             DropPickaxeLootEvent dropPickaxeLootEvent = new DropPickaxeLootEvent(false, dropsList, player);
             Main.getInstance().getServer().getPluginManager().callEvent(dropPickaxeLootEvent);
 
-            player.setItemInHand(tool.getItem(multi, value + count, totalSold, pickaxe));
+            player.getInventory().setItemInMainHand(tool.getItem(multi, value + count, totalSold, mainHand));
             TokensReceiveEvent tokensReceiveEvent = new TokensReceiveEvent(profile, amount * count, tool.getTokenName());
             Main.getInstance().getServer().getPluginManager().callEvent(tokensReceiveEvent);
         }
+        
+        });
 
         return true;
     }
@@ -190,10 +171,5 @@ public class MiningListener implements Listener {
         List<Block> blockList = Arrays.asList(new Block[]{event.getBlock()});
         if (mine(player, blockList))
             event.setCancelled(true);
-    }
-
-    private void regenBlock(Block b, int time, Material replace) {
-        RegenUtils.doRegen(b.getLocation(), b.getType(), time);
-        b.setType(replace);
     }
 }

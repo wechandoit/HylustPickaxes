@@ -41,10 +41,9 @@ shop:
   rows: 3
   fills:
     '1':
-      material: STAINED_GLASS_PANE
-      name: '&r'
+      material: GRAY_STAINED_GLASS_PANE
+      name: ' '
       lore: [ ]
-      data: 7
       slots:
         - 0
         - 1
@@ -80,10 +79,9 @@ menu:
   rows: 5
   fills:
     '1':
-      material: STAINED_GLASS_PANE
-      name: '&r'
+      material: GRAY_STAINED_GLASS_PANE
+      name: ' '
       lore: []
-      data: 7
       slots:
         - 0
         - 1
@@ -151,10 +149,10 @@ item:
       - 'KEY_HUNTER'
       - 'FORTUNE'
       - 'EXPERIENCE'
-      - 'AUTOSELL'
+#      - 'AUTOSELL'
       - 'AUTOSMELT'
       - 'TRENCH'
-      - 'CHARITY'
+#      - 'CHARITY'
       - 'LUCK'
       - 'DAWN'
       - 'GRENADE'
@@ -165,29 +163,29 @@ item:
 
 #upgrades/enchants
 upgrade:
-  AUTOSELL:
-    name: '&a&lAutoSell'
-    lore:
-      - '&r'
-      - '&7Auto-Sell all blocks you mine.'
-      - '&7This enchantment works with all other'
-      - '&7pickaxe enchantments.'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Price: &a&l<cost>'
-      - '&7Progress: &a&l<level>/&a&l<max-level>'
-    max-level: 1
-    slot: 10
-    prices:
-      '1':
-        cost: 7500
-    material: PRISMARINE_SHARD
-    amount: 1
-    data: 0
-    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
-    type: autosell
-    functions: []
+#  AUTOSELL:
+#    name: '&a&lAutoSell'
+#    lore:
+#      - '&r'
+#      - '&7Auto-Sell all blocks you mine.'
+#      - '&7This enchantment works with all other'
+#      - '&7pickaxe enchantments.'
+#      - '&r'
+#      - '&8[&7<progress>&8]'
+#      - '&r'
+#      - '&7Price: &a&l<cost>'
+#      - '&7Progress: &a&l<level>/&a&l<max-level>'
+#    max-level: 1
+#    slot: 10
+#    prices:
+#      '1':
+#        cost: 7500
+#    material: PRISMARINE_SHARD
+#    amount: 1
+#    data: 0
+#    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
+#    type: autosell
+#    functions: []
   AUTOSMELT:
     name: '&b&lAutoSmelt'
     lore:
@@ -269,135 +267,135 @@ upgrade:
     url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
     type: trench
     functions: []
-  CHARITY:
-    name: '&a&lCharity'
-    lore:
-      - '&r'
-      - '&7A chance to give everyone on the server money!'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Price: &a&l<cost>'
-      - '&7Progress: &a&l<level>/&a&l<max-level>'
-    max-level: 15
-    slot: 12
-    prices:
-      '1':
-        cost: 500
-        multiplier: 0.002
-      '2':
-        cost: 600
-        multiplier: 0.003
-      '3':
-        cost: 650
-        multiplier: 0.0035
-      '4':
-        cost: 700
-        multiplier: 0.004
-      '5':
-        cost: 750
-        multiplier: 0.0045
-      '6':
-        cost: 800
-        multiplier: 0.0050
-      '7':
-        cost: 900
-        multiplier: 0.006
-      '8':
-        cost: 950
-        multiplier: 0.007
-      '9':
-        cost: 1000
-        multiplier: 0.008
-      '10':
-        cost: 1250
-        multiplier: 0.009
-      '11':
-        cost: 1350
-        multiplier: 0.0095
-      '12':
-        cost: 1450
-        multiplier: 0.0097
-      '13':
-        cost: 1550
-        multiplier: 0.0099
-      '14':
-        cost: 1650
-        multiplier: 0.01
-      '15':
-        cost: 2050
-        multiplier: 0.0125
-    material: INK_SACK
-    amount: 1
-    data: 0
-    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
-    type: charity
-    functions: []
-  LUCK:
-    name: '&b&lLuck'
-    lore:
-      - '&r'
-      - '&7Finds random amounts of'
-      - '&7money when mining ores.'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Price: &a&l<cost>'
-      - '&7Progress: &a&l<level>/&a&l<max-level>'
-    max-level: 15
-    slot: 19
-    prices:
-      '1':
-        cost: 1000
-        multiplier: 0.001
-      '2':
-        cost: 1200
-        multiplier: 0.002
-      '3':
-        cost: 1400
-        multiplier: 0.003
-      '4':
-        cost: 1500
-        multiplier: 0.0035
-      '5':
-        cost: 2000
-        multiplier: 0.004
-      '6':
-        cost: 2100
-        multiplier: 0.0055
-      '7':
-        cost: 2200
-        multiplier: 0.006
-      '8':
-        cost: 2400
-        multiplier: 0.0065
-      '9':
-        cost: 2600
-        multiplier: 0.007
-      '10':
-        cost: 2700
-        multiplier: 0.0075
-      '11':
-        cost: 2900
-        multiplier: 0.008
-      '12':
-        cost: 3100
-        multiplier: 0.0085
-      '13':
-        cost: 3300
-        multiplier: 0.0087
-      '14':
-        cost: 3500
-        multiplier: 0.0089
-      '15':
-        cost: 4000
-        multiplier: 0.009
-    material: GOLD_AXE
-    amount: 1
-    data: 0
-    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
-    type: luck
-    functions: []
+#  CHARITY:
+#    name: '&a&lCharity'
+#    lore:
+#      - '&r'
+#      - '&7A chance to give everyone on the server money!'
+#      - '&r'
+#      - '&8[&7<progress>&8]'
+#      - '&r'
+#      - '&7Price: &a&l<cost>'
+#      - '&7Progress: &a&l<level>/&a&l<max-level>'
+#    max-level: 15
+#    slot: 12
+#    prices:
+#      '1':
+#        cost: 500
+#        multiplier: 0.002
+#      '2':
+#        cost: 600
+#        multiplier: 0.003
+#      '3':
+#        cost: 650
+#        multiplier: 0.0035
+#      '4':
+#        cost: 700
+#        multiplier: 0.004
+#      '5':
+#        cost: 750
+#        multiplier: 0.0045
+#      '6':
+#        cost: 800
+#        multiplier: 0.0050
+#      '7':
+#        cost: 900
+#        multiplier: 0.006
+#      '8':
+#        cost: 950
+#        multiplier: 0.007
+#      '9':
+#        cost: 1000
+#        multiplier: 0.008
+#      '10':
+#        cost: 1250
+#        multiplier: 0.009
+#      '11':
+#        cost: 1350
+#        multiplier: 0.0095
+#      '12':
+#        cost: 1450
+#        multiplier: 0.0097
+#      '13':
+#        cost: 1550
+#        multiplier: 0.0099
+#      '14':
+#        cost: 1650
+#        multiplier: 0.01
+#      '15':
+#        cost: 2050
+#        multiplier: 0.0125
+#    material: INK_SACK
+#    amount: 1
+#    data: 0
+#    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
+#    type: charity
+#    functions: []
+#  LUCK:
+#    name: '&b&lLuck'
+#    lore:
+#      - '&r'
+#      - '&7Finds random amounts of'
+#      - '&7money when mining ores.'
+#      - '&r'
+#      - '&8[&7<progress>&8]'
+#      - '&r'
+#      - '&7Price: &a&l<cost>'
+#      - '&7Progress: &a&l<level>/&a&l<max-level>'
+#    max-level: 15
+#    slot: 19
+#    prices:
+#      '1':
+#        cost: 1000
+#        multiplier: 0.001
+#      '2':
+#        cost: 1200
+#        multiplier: 0.002
+#      '3':
+#        cost: 1400
+#        multiplier: 0.003
+#      '4':
+#        cost: 1500
+#        multiplier: 0.0035
+#      '5':
+#        cost: 2000
+#        multiplier: 0.004
+#      '6':
+#        cost: 2100
+#        multiplier: 0.0055
+#      '7':
+#        cost: 2200
+#        multiplier: 0.006
+#      '8':
+#        cost: 2400
+#        multiplier: 0.0065
+#      '9':
+#        cost: 2600
+#        multiplier: 0.007
+#      '10':
+#        cost: 2700
+#        multiplier: 0.0075
+#      '11':
+#        cost: 2900
+#        multiplier: 0.008
+#      '12':
+#        cost: 3100
+#        multiplier: 0.0085
+#      '13':
+#        cost: 3300
+#        multiplier: 0.0087
+#      '14':
+#        cost: 3500
+#        multiplier: 0.0089
+#      '15':
+#        cost: 4000
+#        multiplier: 0.009
+#    material: GOLD_AXE
+#    amount: 1
+#    data: 0
+#    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
+#    type: luck
+#    functions: []
   EFFICIENCY:
     name: '&a&lEfficiency'
     lore:
@@ -831,7 +829,7 @@ upgrade:
       '15':
         cost: 3500
         multiplier: 0.0050
-    material: WATCH
+    material: CLOCK
     amount: 1
     data: 0
     url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
@@ -907,7 +905,7 @@ upgrade:
       '5':
         cost: 10000
         multiplier: 20 #cooldown (seconds)
-    material: FIREBALL
+    material: FIRE_CHARGE
     amount: 1
     data: 0
     url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123

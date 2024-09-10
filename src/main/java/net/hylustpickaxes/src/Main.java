@@ -1,26 +1,22 @@
 package net.hylustpickaxes.src;
 
-import com.leonardobishop.quests.api.QuestsAPI;
-import com.leonardobishop.quests.quests.tasktypes.TaskTypeManager;
 import net.hylustpickaxes.src.commands.MoonlightPickaxes;
 import net.hylustpickaxes.src.commands.Tokens;
 import net.hylustpickaxes.src.commands.UpgradeCmd;
 import net.hylustpickaxes.src.config.ConfigHandler;
-import net.hylustpickaxes.src.hooks.PlaceholderAPIHook;
 import net.hylustpickaxes.src.listener.InventoryListener;
 import net.hylustpickaxes.src.listener.MiningListener;
 import net.hylustpickaxes.src.listener.PlayerListener;
 import net.hylustpickaxes.src.listener.CustomEventListener;
 import net.hylustpickaxes.src.profiles.ProfileManager;
 import net.hylustpickaxes.src.shop.ShopManager;
-import net.hylustpickaxes.src.tasktypes.OreBreakTaskType;
 import net.hylustpickaxes.src.tools.ToolManger;
 import net.hylustpickaxes.src.upgrades.UpgradeManager;
-import net.milkbowl.vault.economy.Economy;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.TNTPrimed;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -29,30 +25,22 @@ import java.util.*;
 public class Main extends JavaPlugin {
 
     public static Main plugin;
+    public static MiniMessage mm = MiniMessage.miniMessage();
     private static UpgradeManager upgradeManager;
     private static ToolManger toolManger;
     private static ProfileManager profileManager;
     private static ConfigHandler configHandler;
     private static ShopManager shopManager;
     public static Random random;
-    private static Economy econ;
     public HashMap<UUID, Integer> grenadeCDTime = new HashMap<UUID, Integer>();
-    private static List<Fireball> fireballs = new ArrayList<>();
-    private static List<TNTPrimed> tntPrimedList = new ArrayList<>();
+    public static List<Fireball> fireballs = new ArrayList<>();
+    public static List<TNTPrimed> tntPrimedList = new ArrayList<>();
 
     public void onEnable() {
         plugin = this;
-
-        if (!setupEconomy()) {
-            Main.getInstance().getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-
         random = new Random();
 
         saveDefaultConfig();
-        registerPlaceholders();
 
         upgradeManager = new UpgradeManager();
         toolManger = new ToolManger();
@@ -62,9 +50,6 @@ public class Main extends JavaPlugin {
 
         loadCommands();
         loadListeners();
-        if (hasQuests())
-            loadTaskTypes();
-
         grenadeRunner();
     }
 
@@ -110,11 +95,11 @@ public class Main extends JavaPlugin {
         toolManger = null;
         configHandler = null;
         shopManager = null;
-        for (TNTPrimed tnt : OreBreakTaskType.getTntPrimedList())
+        for (TNTPrimed tnt : tntPrimedList)
         {
             tnt.remove();
         }
-        for (Fireball fb : OreBreakTaskType.getFireballs())
+        for (Fireball fb : fireballs)
         {
             fb.remove();
         }
@@ -134,13 +119,9 @@ public class Main extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new CustomEventListener(), this);
-        if (!hasQuests()) Bukkit.getServer().getPluginManager().registerEvents(new MiningListener(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new MiningListener(), this);
     }
 
-    public void loadTaskTypes() {
-        TaskTypeManager taskTypeManager = QuestsAPI.getTaskTypeManager();
-        taskTypeManager.registerTaskType(new OreBreakTaskType());
-    }
 
     public static ProfileManager getProfileManager() {
         return profileManager;
@@ -156,37 +137,6 @@ public class Main extends JavaPlugin {
 
     public static ShopManager getShopManager() { return shopManager; }
 
-    private void registerPlaceholders() {
-        if (getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            new PlaceholderAPIHook(this).register();
-            System.out.println("Placeholder registered!");
-        }
-    }
-
-    public boolean hasShopGUIPlus() {
-        return (getServer().getPluginManager().getPlugin("ShopGUIPlus") != null && getServer().getPluginManager().getPlugin("ShopGUIPlus").isEnabled());
-    }
-
-    public boolean hasQuests() {
-        return (getServer().getPluginManager().getPlugin("Quests") != null && getServer().getPluginManager().getPlugin("Quests").isEnabled());
-    }
-
-    public boolean hasOreRegenerator() {
-        return (getServer().getPluginManager().getPlugin("OreRegenerator") != null && getServer().getPluginManager().getPlugin("OreRegenerator").isEnabled());
-    }
-
-    private boolean setupEconomy() {
-        if (getServer().getPluginManager().getPlugin("Vault") == null) {
-            return false;
-        }
-        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp == null) {
-            return false;
-        }
-        econ = rsp.getProvider();
-        return econ != null;
-    }
-
     public static List<Fireball> getFireballs() {
         return fireballs;
     }
@@ -194,10 +144,5 @@ public class Main extends JavaPlugin {
     public static List<TNTPrimed> getTntPrimedList() {
         return tntPrimedList;
     }
-
-    public static Economy getEconomy() {
-        return econ;
-    }
-
 
 }

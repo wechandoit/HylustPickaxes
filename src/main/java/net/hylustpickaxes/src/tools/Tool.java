@@ -1,12 +1,14 @@
 package net.hylustpickaxes.src.tools;
 
-import net.hylustpickaxes.src.nbt.NBT;
-import net.hylustpickaxes.src.nbt.NBTList;
 import net.hylustpickaxes.src.upgrades.Upgrade;
 import net.hylustpickaxes.src.utils.EnchantNames;
 import net.hylustpickaxes.src.utils.MiscUtils;
+import net.kyori.adventure.text.Component;
+
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import de.tr7zw.nbtapi.NBT;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -34,42 +36,41 @@ public class Tool {
     public ItemStack getItem(double multi, int value, double totalSoldPrice, ItemStack previousItem) {
         DecimalFormat df = new DecimalFormat("#,###.00");
         ItemStack copy = item.clone();
-        List<String> lore = new ArrayList<>();
-        for (String line : item.getItemMeta().getLore()) {
-            String lineCopy = line.replaceAll("<multiplier>", String.valueOf(multi)).replaceAll("<sold>", df.format(totalSoldPrice)).replaceAll("<value>", String.valueOf(value));
-            lore.add(MiscUtils.chat(lineCopy));
+        List<Component> lore = new ArrayList<>();
+        if (item.getItemMeta().hasLore()) {
+	        for (Component line : item.getItemMeta().lore()) {
+	            String lineCopy = line.toString().replaceAll("<multiplier>", String.valueOf(multi)).replaceAll("<sold>", df.format(totalSoldPrice)).replaceAll("<value>", String.valueOf(value));
+	            lore.add(MiscUtils.chat(lineCopy));
+	        }
         }
 
         ItemMeta meta = copy.getItemMeta();
-        meta.setLore(lore);
+        meta.lore(lore);
         copy.setItemMeta(meta);
-        NBT toolNBT = NBT.get(copy);
-        toolNBT.setInt("value", value);
-        toolNBT.setString("totalSold", String.valueOf(totalSoldPrice));
-        toolNBT.setString("multiplier", String.valueOf(multi));
-        NBTList ench = new NBTList();
-        toolNBT.set("ench", ench);
+        NBT.modify(copy, toolNBT -> {
+	        toolNBT.setInteger("value", value);
+	        toolNBT.setString("totalSold", String.valueOf(totalSoldPrice));
+	        toolNBT.setString("multiplier", String.valueOf(multi));
+	        
+	        if (previousItem != null) {
+	        	for (Upgrade upgrade : upgrades) {
+	        		toolNBT.setInteger("upgrade." + upgrade.getName(), (int) NBT.get(previousItem, mainNBT -> (int) mainNBT.getInteger("upgrade." + upgrade.getName())));
+	        	}
+	        }
+        });
+        
         if (previousItem != null) {
-            NBT mainNBT = NBT.get(previousItem);
             if (upgrades != null && !upgrades.isEmpty()) {
-                for (Upgrade upgrade : upgrades) {
-                    toolNBT.setInt("upgrade." + upgrade.getName(), mainNBT.getInt("upgrade." + upgrade.getName()));
-
-                }
-                copy = toolNBT.apply(copy);
-
                 for (Upgrade upgrade : upgrades) {
                     String[] line = upgrade.getType().split(":");
                     if (line.length > 1 && line[0].equalsIgnoreCase("enchant")) {
                         if (EnchantNames.getEnchantment(line[1]) != null) {
-                            copy.addUnsafeEnchantment(EnchantNames.getEnchantment(line[1]), mainNBT.getInt("upgrade." + upgrade.getName()));
+                            copy.addUnsafeEnchantment(EnchantNames.getEnchantment(line[1]), (int) NBT.get(previousItem, mainNBT -> (int) mainNBT.getInteger("upgrade." + upgrade.getName())));
                         }
                     }
                 }
             }
 
-        } else {
-            copy = toolNBT.apply(copy);
         }
         return copy;
     }

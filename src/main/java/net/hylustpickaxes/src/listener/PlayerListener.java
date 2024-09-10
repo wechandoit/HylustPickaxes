@@ -3,9 +3,7 @@ package net.hylustpickaxes.src.listener;
 import net.hylustpickaxes.src.Main;
 import net.hylustpickaxes.src.config.ConfigData;
 import net.hylustpickaxes.src.gui.GUIManager;
-import net.hylustpickaxes.src.nbt.NBT;
 import net.hylustpickaxes.src.profiles.Profile;
-import net.hylustpickaxes.src.tasktypes.OreBreakTaskType;
 import net.hylustpickaxes.src.tools.Tool;
 import net.hylustpickaxes.src.upgrades.Upgrade;
 import net.hylustpickaxes.src.utils.MiscUtils;
@@ -24,6 +22,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import de.tr7zw.nbtapi.NBT;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -41,11 +41,11 @@ public class PlayerListener implements Listener {
     @EventHandler
     public static void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        ItemStack hand = player.getItemInHand();
-        if (hand == null || hand.getType() == Material.AIR || player == null || player.isDead() || NBT.get(hand) == null || !(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) || !player.isSneaking())
+        ItemStack hand = player.getInventory().getItemInMainHand();
+        if (hand == null || hand.getType() == Material.AIR || player == null || player.isDead() || !(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) || !player.isSneaking())
             return;
         if (Main.getToolManger().itemIsTool(hand) && Main.getToolManger().isToolPickaxe(hand) && ConfigData.accessUpgradeMenu.equalsIgnoreCase("both") || ConfigData.accessUpgradeMenu.equalsIgnoreCase("shift-right")) {
-            Tool tool = Main.getToolManger().getTool(player.getItemInHand());
+            Tool tool = Main.getToolManger().getTool(hand);
             if (tool != null) player.openInventory(GUIManager.getUpgradeMenu(tool.getUpgrades(), player));
         }
     }
@@ -54,28 +54,30 @@ public class PlayerListener implements Listener {
     public void onGrenadeLaunch(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        ItemStack hand = player.getItemInHand();
-        if (hand == null || hand.getType() == Material.AIR || player == null || player.isDead() || NBT.get(hand) == null || !(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) || player.isSneaking())
+        ItemStack hand = player.getInventory().getItemInMainHand();
+        if (hand == null || hand.getType() == Material.AIR || player == null || player.isDead() || !(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) || player.isSneaking())
             return;
         if (Main.getToolManger().itemIsTool(hand)) {
 
             if (Main.getInstance().grenadeCDTime.containsKey(uuid))
             {
-                player.sendMessage(MiscUtils.chat(ConfigData.cooldown).replace("<time>", String.valueOf(Main.getInstance().grenadeCDTime.get(uuid))));
+            	String message = ConfigData.cooldown.replace("<time>", String.valueOf(Main.getInstance().grenadeCDTime.get(uuid)));
+                player.sendMessage(MiscUtils.chat(message));
                 return;
             }
 
-            Tool tool = Main.getToolManger().getTool(player.getItemInHand());
-            NBT nbt = NBT.get(player.getItemInHand());
+            Tool tool = Main.getToolManger().getTool(hand);
             List<Upgrade> upgrades = tool.getUpgrades();
 
             for (Upgrade upgrade : upgrades) {
-                int level = nbt.getInt("upgrade." + upgrade.getName());
+                int level = NBT.get(hand, nbt -> (int) nbt.getInteger("upgrade." + upgrade.getName()));
                 if (level == 0) continue;
                 else if (level > upgrade.getMaxLevel()) {
                     level = upgrade.getMaxLevel();
-                    nbt.setInt("upgrade." + upgrade.getName(), upgrade.getMaxLevel());
-                    player.setItemInHand(nbt.apply(player.getItemInHand()));
+                    NBT.modify(hand, nbt -> {
+                    	nbt.setInteger("upgrade." + upgrade.getName(), upgrade.getMaxLevel());
+                    	});
+                    player.getInventory().setItemInMainHand(hand);
                 } else {
                     String[] line = upgrade.getType().split(":");
                     if (line[0].equalsIgnoreCase("GRENADE")) {
@@ -96,15 +98,15 @@ public class PlayerListener implements Listener {
         fireball.setShooter(player);
         fireball.setIsIncendiary(false);
         fireball.setYield(4);
-        OreBreakTaskType.getFireballs().add(fireball);
+        Main.fireballs.add(fireball);
     }
 
     @EventHandler
     public static void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
-        ItemStack hand = player.getItemInHand();
+        ItemStack hand = player.getInventory().getItemInMainHand();
         Profile profile = Main.getProfileManager().getProfile(player);
-        if (hand == null || hand.getType() == Material.AIR || player == null || player.isDead() || NBT.get(hand) == null)
+        if (hand == null || hand.getType() == Material.AIR || player == null || player.isDead())
             return;
         if (Main.getToolManger().itemIsTool(hand) && Main.getToolManger().isToolPickaxe(hand)) {
             Tool tool = Main.getToolManger().getTool(hand);
@@ -112,14 +114,13 @@ public class PlayerListener implements Listener {
                 String[] line = upgrade.getType().split(":");
                 if (line.length > 1 && line[0].equalsIgnoreCase("potionEffect")) {
                     if (line[1].equalsIgnoreCase("haste")) {
-                        NBT handNBT = NBT.get(hand);
-                        int level = handNBT.getInt("upgrade." + upgrade.getName());
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, level - 1));
+                        int level =  NBT.get(hand, handNBT -> (int) handNBT.getInteger("upgrade." + upgrade.getName()));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, Integer.MAX_VALUE, level - 1));
                     }
                 }
             }
         } else {
-            player.removePotionEffect(PotionEffectType.FAST_DIGGING);
+            player.removePotionEffect(PotionEffectType.HASTE);
         }
     }
 

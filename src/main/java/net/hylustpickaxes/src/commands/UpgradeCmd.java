@@ -17,10 +17,10 @@ public class UpgradeCmd implements CommandExecutor {
         if (sender instanceof Player)
         {
             Player player = (Player) sender;
-            ItemStack item = player.getItemInHand();
+            ItemStack item = player.getInventory().getItemInMainHand();
             if (item != null && !player.isDead() && item.getType() != Material.AIR && Main.getToolManger().itemIsTool(item) && Main.getToolManger().isToolPickaxe(item) && ConfigData.accessUpgradeMenu.equalsIgnoreCase("both") || ConfigData.accessUpgradeMenu.equalsIgnoreCase("command"))
             {
-                Tool tool = Main.getToolManger().getTool(player.getItemInHand());
+                Tool tool = Main.getToolManger().getTool(item);
                 player.openInventory(GUIManager.getUpgradeMenu(tool.getUpgrades(), player));
             }
         } else

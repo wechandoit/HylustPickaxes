@@ -1,8 +1,10 @@
 package net.hylustpickaxes.src.utils;
 
+import net.hylustpickaxes.src.Main;
 import net.hylustpickaxes.src.config.ConfigData;
-import net.hylustpickaxes.src.nbt.NBT;
 import net.hylustpickaxes.src.upgrades.Upgrade;
+import net.kyori.adventure.text.Component;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,11 +13,13 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import de.tr7zw.nbtapi.NBT;
+
 import java.util.*;
 
 public class MiscUtils {
-    public static String chat(String message) {
-        return ChatColor.translateAlternateColorCodes('&', message);
+    public static Component chat(String message) {
+    	return Main.mm.deseializeOrNull(message);
     }
 
     public static boolean getBooleanFromWeightedChance(double chance, Random random) {
@@ -62,9 +66,8 @@ public class MiscUtils {
         oresList.add(Material.GOLD_ORE);
         oresList.add(Material.DIAMOND_ORE);
         oresList.add(Material.REDSTONE_ORE);
-        oresList.add(Material.GLOWING_REDSTONE_ORE);
         oresList.add(Material.EMERALD_ORE);
-        oresList.add(Material.QUARTZ_ORE);
+        oresList.add(Material.NETHER_QUARTZ_ORE);
         return oresList;
     }
 
@@ -84,15 +87,14 @@ public class MiscUtils {
                 else
                     return new ItemStack(Material.GOLD_ORE, random.nextInt(fortuneLevel + 1) + 1);
             case LAPIS_ORE:
-                return new ItemStack(Material.INK_SACK, random.nextInt(fortuneLevel + 4) + 1, (short) 4);
+                return new ItemStack(Material.LAPIS_LAZULI, random.nextInt(fortuneLevel + 4) + 1);
             case DIAMOND_ORE:
                 return new ItemStack(Material.DIAMOND, random.nextInt(fortuneLevel + 1) + 1);
             case REDSTONE_ORE:
-            case GLOWING_REDSTONE_ORE:
                 return new ItemStack(Material.REDSTONE, random.nextInt(fortuneLevel + 1) + 1);
             case EMERALD_ORE:
                 return new ItemStack(Material.EMERALD, random.nextInt(fortuneLevel + 1) + 1);
-            case QUARTZ_ORE:
+            case NETHER_QUARTZ_ORE:
                 return new ItemStack(Material.QUARTZ, random.nextInt(fortuneLevel + 1) + 1);
             default:
                 return null;
@@ -141,15 +143,17 @@ public class MiscUtils {
         return uuids;
     }
 
-    public static HashMap<Upgrade, Integer> getAllUpgradeLevels(List<Upgrade> upgrades, NBT nbt)
+    public static HashMap<Upgrade, Integer> getAllUpgradeLevels(List<Upgrade> upgrades, ItemStack item)
     {
         HashMap<Upgrade, Integer> upgradeMap = new HashMap<>();
-        for (Upgrade upgrade : upgrades)
-        {
-            int level = nbt.getInt("upgrade." + upgrade.getName());
-            if (level > upgrade.getMaxLevel()) level = upgrade.getMaxLevel();
-            upgradeMap.put(upgrade, level);
-        }
+        NBT.get(item, nbt -> {
+	        for (Upgrade upgrade : upgrades)
+	        {
+	            int level = nbt.getOrDefault("upgrade." + upgrade.getName(), 0);
+	            if (level > upgrade.getMaxLevel()) level = upgrade.getMaxLevel();
+	            upgradeMap.put(upgrade, level);
+	        }
+        });
         return upgradeMap;
     }
 

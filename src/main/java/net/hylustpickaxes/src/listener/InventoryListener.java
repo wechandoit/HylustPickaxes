@@ -3,7 +3,6 @@ package net.hylustpickaxes.src.listener;
 import net.hylustpickaxes.src.Main;
 import net.hylustpickaxes.src.config.ConfigData;
 import net.hylustpickaxes.src.gui.GUIManager;
-import net.hylustpickaxes.src.nbt.NBT;
 import net.hylustpickaxes.src.profiles.Profile;
 import net.hylustpickaxes.src.shop.ShopItem;
 import net.hylustpickaxes.src.tools.Tool;
@@ -23,6 +22,8 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import de.tr7zw.nbtapi.NBT;
+
 public class InventoryListener implements Listener {
     @EventHandler
     public void onCraft(PrepareItemCraftEvent event) {
@@ -40,14 +41,14 @@ public class InventoryListener implements Listener {
         if (itemStack == null || !Main.getToolManger().itemIsTool(itemStack)) {
             return;
         }
-        event.getItem().setType(Material.AIR);
+        event.getItem().setAmount(0);;
     }
 
     @EventHandler
     public static void onItemDrop(PlayerDropItemEvent event) {
         Player player = (Player) event.getPlayer();
         ItemStack hand = event.getItemDrop().getItemStack();
-        if (player == null || player.isDead() || event.getItemDrop() == null || NBT.get(hand) == null) return;
+        if (player == null || player.isDead() || event.getItemDrop() == null) return;
         if (Main.getToolManger().itemIsTool(hand)) {
             event.setCancelled(true);
         }
@@ -59,14 +60,14 @@ public class InventoryListener implements Listener {
         ItemStack hand = event.getCursor();
         ItemStack clickedItem = event.getCurrentItem();
         if ((player == null) || player.isDead()) return;
-        if (!((hand == null) || (hand.getType() == Material.AIR) || (NBT.get(hand) == null))) {
+        if (!((hand == null) || (hand.getType() == Material.AIR))) {
             if (Main.getToolManger().itemIsTool(hand)) {
                 if (event.getClickedInventory() == null || !event.getClickedInventory().equals(player.getInventory()) ||
                         event.getClick().isShiftClick() || event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
                     event.setCancelled(true);
                 }
             }
-        } else if (clickedItem != null && clickedItem.getType() != Material.AIR && NBT.get(clickedItem) != null && Main.getToolManger().itemIsTool(clickedItem)) {
+        } else if (clickedItem != null && clickedItem.getType() != Material.AIR && Main.getToolManger().itemIsTool(clickedItem)) {
             if (event.getClick().isShiftClick() || event.getClick() == ClickType.NUMBER_KEY) {
                 event.setCancelled(true);
             }
@@ -74,7 +75,7 @@ public class InventoryListener implements Listener {
             if (player.getInventory().getContents()[event.getHotbarButton()] != null)
             {
                 ItemStack hotbar = player.getInventory().getContents()[event.getHotbarButton()];
-                if (hotbar != null && hotbar.getType() != Material.AIR && NBT.get(hotbar) != null && Main.getToolManger().itemIsTool(hotbar))
+                if (hotbar != null && hotbar.getType() != Material.AIR && Main.getToolManger().itemIsTool(hotbar))
                 {
                     event.setCancelled(true);
                 }
@@ -90,7 +91,7 @@ public class InventoryListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         Profile profile = Main.getProfileManager().getProfile(player);
         Inventory inventory = event.getClickedInventory();
-        if (inventory != null && inventory.getName() != null && inventory.getName().equalsIgnoreCase(MiscUtils.chat(ConfigData.shopMenuName)))
+        if (inventory != null && event.getView().title() != null && event.getView().title().equals(MiscUtils.chat(ConfigData.shopMenuName)))
         {
             event.setCancelled(true);
             for (ShopItem shopItem : Main.getShopManager().getShopItems())
@@ -130,19 +131,18 @@ public class InventoryListener implements Listener {
     @EventHandler
     public static void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        ItemStack hand = player.getItemInHand();
+        ItemStack hand = player.getInventory().getItemInMainHand();
         Profile profile = Main.getProfileManager().getProfile(player);
         try {
             Inventory inventory = event.getClickedInventory();
             ItemStack item = event.getCurrentItem();
-            if (item == null || item.getType() == Material.AIR || player == null || player.isDead() || NBT.get(item) == null)
+            if (item == null || item.getType() == Material.AIR || player == null || player.isDead())
                 return;
-            NBT nbt = NBT.get(item);
-            if (inventory.getTitle().equals(MiscUtils.chat(ConfigData.upgradeMenuName))) {
+            if (event.getView().title().equals(MiscUtils.chat(ConfigData.upgradeMenuName))) {
                 event.setCancelled(true);
-                if (!(nbt.getString("upgrade.name").equals("")) && nbt.getString("upgrade.name") != null) {
-                    String upgradeName = nbt.getString("upgrade.name");
-                    int level = nbt.getInt("upgrade." + upgradeName);
+                if (!NBT.get(item, nbt -> (String) nbt.getString("upgrade.name")).equals("") && NBT.get(item, nbt -> (String) nbt.getString("upgrade.name")) != null) {
+                    String upgradeName = NBT.get(item, nbt -> (String) nbt.getString("upgrade.name"));
+                    int level = NBT.get(item, nbt -> (int) nbt.getInteger("upgrade." + upgradeName));
                     Upgrade upgrade = Main.getUpgradeManager().getUpgrade(upgradeName);
                     Tool tool = Main.getToolManger().getTool(hand);
                     String tokenName = tool.getTokenName();
@@ -156,9 +156,10 @@ public class InventoryListener implements Listener {
                     } else {
                         player.sendMessage(MiscUtils.chat(ConfigData.enchantBought.replaceAll("<enchant>", upgrade.getName()).replaceAll("<amount>", ConfigData.costString.replaceAll("<cost>", String.valueOf(upgrade.getCost(level))))));
                         profile.removeTokens((int) upgrade.getCost(level).doubleValue(), tokenName);
-                        NBT handNBT = NBT.get(hand);
-                        handNBT.setInt("upgrade." + upgradeName, level + 1);
-                        player.setItemInHand(handNBT.apply(hand));
+                        NBT.modify(hand, nbt -> {
+                        	nbt.setInteger("upgrade." + upgradeName, level + 1);
+                        });
+                        player.getInventory().setItemInMainHand(hand);
                         Main.getProfileManager().saveData();
 
                         player.openInventory(GUIManager.getUpgradeMenu(tool.getUpgrades(), player));
