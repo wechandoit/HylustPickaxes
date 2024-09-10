@@ -1,0 +1,1067 @@
+placeholder:
+  maxed-out: '&c&lMAXED OUT'
+  cost: '&a&l<cost> Tokens'
+  filled: '&a|'
+  non-filled: '&7|'
+  bars: 20
+
+#keys from the key hunter enchant
+keychances:
+  Asteroid: 60
+  Meteorite: 40
+
+#pouches from the token pouches enchant
+tokenpouches:
+  Common: 60
+  Medium: 40
+
+#messages
+messages:
+  no_permission: '&cYou don''t have the permission to do that.'
+  invalid-number: '&c''<argument>'' has to be a number'
+  invalid-command-usage: '&aIncorrect Usage: do /hylustpickaxes <add/remove/set> <player> <tokenName> <amount> or /hylustpickaxes give <player> <toolName> <amount>'
+  player-only: '&cThis command is for players only!'
+  reload: '&aConfig was reloaded'
+  player-not-online: '&cPlayer seems to be not online!'
+  maxed-out: '&cYou have maxed out on this enchant!'
+  not-enough-tokens: '&cYou do not have enough tokens!'
+  enchant-bought: '&aYou have bought &a&n<enchant>&a for &a&n<amount>&a!'
+  get-tokens: '&a<player> has <amount> tokens.'
+  invalid-player: '&cPlayer is invalid!'
+  shop-bought-msg: '&aYou bought <item>&a for <cost>&a.'
+  cooldown-msg: '&cThere are <time> seconds remaining before you can use this again!'
+
+features:
+  #shift-right or command or both
+  accessUpgradeMenu: shift-right
+
+#shop
+shop:
+  name: '&8Token Shop'
+  rows: 3
+  fills:
+    '1':
+      material: STAINED_GLASS_PANE
+      name: '&r'
+      lore: [ ]
+      data: 7
+      slots:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+        - 11
+        - 12
+        - 13
+        - 14
+        - 15
+        - 16
+        - 17
+        - 18
+        - 19
+        - 20
+        - 21
+        - 22
+        - 23
+        - 24
+        - 25
+        - 26
+
+#gui
+menu:
+  name: '&8Upgrade Menu'
+  rows: 5
+  fills:
+    '1':
+      material: STAINED_GLASS_PANE
+      name: '&r'
+      lore: []
+      data: 7
+      slots:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 13
+        - 16
+        - 17
+        - 18
+        - 19
+        - 20
+        - 21
+        - 22
+        - 23
+        - 24
+        - 25
+        - 26
+        - 27
+        - 28
+        - 29
+        - 30
+        - 31
+        - 32
+        - 33
+        - 34
+        - 35
+        - 36
+        - 37
+        - 38
+        - 39
+        - 40
+        - 41
+        - 42
+        - 43
+        - 44
+
+#custom tools
+item:
+  #tool name must equal token name
+  pickaxe:
+    name: '&3&lUPGRADEABLE PICKAXE'
+    lore:
+      - '&7'
+      - '&7This pickaxe can be upgraded!'
+      - '&7Mine blocks to get tokens!'
+      - '&7Shift-Right&7 to open the upgrade menu!'
+      - '&7'
+      - '&7Blocks Mined:&a <value>'
+    material: DIAMOND_PICKAXE
+    data: 0
+    #identifier for the tokens for this pickaxe
+    tokenname: 'pickaxe' #tool name must equal token name
+    hideVanillaEnchants: true
+    #upgrades
+    upgrades:
+      - 'EFFICIENCY'
+      - 'HASTE'
+      - 'ESSENCE_SPIRIT'
+      - 'KEY_HUNTER'
+      - 'FORTUNE'
+      - 'EXPERIENCE'
+      - 'AUTOSELL'
+      - 'AUTOSMELT'
+      - 'TRENCH'
+      - 'CHARITY'
+      - 'LUCK'
+      - 'DAWN'
+      - 'GRENADE'
+      - 'ERUPTION'
+      - 'NUKE'
+      - 'TOKENPOUCH'
+      - 'EXPLOSION'
+
+#upgrades/enchants
+upgrade:
+  AUTOSELL:
+    name: '&a&lAutoSell'
+    lore:
+      - '&r'
+      - '&7Auto-Sell all blocks you mine.'
+      - '&7This enchantment works with all other'
+      - '&7pickaxe enchantments.'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Price: &a&l<cost>'
+      - '&7Progress: &a&l<level>/&a&l<max-level>'
+    max-level: 1
+    slot: 10
+    prices:
+      '1':
+        cost: 7500
+    material: PRISMARINE_SHARD
+    amount: 1
+    data: 0
+    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
+    type: autosell
+    functions: []
+  AUTOSMELT:
+    name: '&b&lAutoSmelt'
+    lore:
+      - '&r'
+      - '&7Auto-Smelt all blocks you mine.'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Price: &a&l<cost>'
+      - '&7Progress: &a&l<level>/&a&l<max-level>'
+    max-level: 1
+    slot: 20
+    prices:
+      '1':
+        cost: 2500
+    material: FURNACE
+    amount: 1
+    data: 0
+    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
+    type: autosmelt
+    functions: []
+  TRENCH:
+    name: '&a&lTrench'
+    lore:
+      - '&r'
+      - '&7Mines all blocks in a radius'
+      - '&7If you have any questions message a staff member'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Price: &a&l<cost>'
+      - '&7Progress: &a&l<level>/&a&l<max-level>'
+    max-level: 10
+    slot: 11
+    prices:
+      '1':
+        cost: 4500
+        multiplier: 0.1 # 0.5% of activating
+        value: 1
+      '2':
+        cost: 5750
+        multiplier: 0.2 # 0.5% of activating
+        value: 1
+      '3':
+        cost: 6000
+        multiplier: 0.3 # 0.5% of activating
+        value: 1
+      '4':
+        cost: 7100
+        multiplier: 0.4 # 0.5% of activating
+        value: 1
+      '5':
+        cost: 7200
+        multiplier: 0.5 # 0.5% of activating
+        value: 1
+      '6':
+        cost: 8500
+        multiplier: 0.6 # 0.5% of activating
+        value: 1
+      '7':
+        cost: 8700
+        multiplier: 0.7 # 0.5% of activating
+        value: 1
+      '8':
+        cost: 9000
+        multiplier: 0.8 # 0.5% of activating
+        value: 1
+      '9':
+        cost: 9500
+        multiplier: 0.9 # 0.5% of activating
+        value: 1
+      '10':
+        cost: 10000
+        multiplier: 1.0 # 0.5% of activating
+        value: 1
+    material: TNT
+    amount: 1
+    data: 0
+    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
+    type: trench
+    functions: []
+  CHARITY:
+    name: '&a&lCharity'
+    lore:
+      - '&r'
+      - '&7A chance to give everyone on the server money!'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Price: &a&l<cost>'
+      - '&7Progress: &a&l<level>/&a&l<max-level>'
+    max-level: 15
+    slot: 12
+    prices:
+      '1':
+        cost: 500
+        multiplier: 0.002
+      '2':
+        cost: 600
+        multiplier: 0.003
+      '3':
+        cost: 650
+        multiplier: 0.0035
+      '4':
+        cost: 700
+        multiplier: 0.004
+      '5':
+        cost: 750
+        multiplier: 0.0045
+      '6':
+        cost: 800
+        multiplier: 0.0050
+      '7':
+        cost: 900
+        multiplier: 0.006
+      '8':
+        cost: 950
+        multiplier: 0.007
+      '9':
+        cost: 1000
+        multiplier: 0.008
+      '10':
+        cost: 1250
+        multiplier: 0.009
+      '11':
+        cost: 1350
+        multiplier: 0.0095
+      '12':
+        cost: 1450
+        multiplier: 0.0097
+      '13':
+        cost: 1550
+        multiplier: 0.0099
+      '14':
+        cost: 1650
+        multiplier: 0.01
+      '15':
+        cost: 2050
+        multiplier: 0.0125
+    material: INK_SACK
+    amount: 1
+    data: 0
+    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
+    type: charity
+    functions: []
+  LUCK:
+    name: '&b&lLuck'
+    lore:
+      - '&r'
+      - '&7Finds random amounts of'
+      - '&7money when mining ores.'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Price: &a&l<cost>'
+      - '&7Progress: &a&l<level>/&a&l<max-level>'
+    max-level: 15
+    slot: 19
+    prices:
+      '1':
+        cost: 1000
+        multiplier: 0.001
+      '2':
+        cost: 1200
+        multiplier: 0.002
+      '3':
+        cost: 1400
+        multiplier: 0.003
+      '4':
+        cost: 1500
+        multiplier: 0.0035
+      '5':
+        cost: 2000
+        multiplier: 0.004
+      '6':
+        cost: 2100
+        multiplier: 0.0055
+      '7':
+        cost: 2200
+        multiplier: 0.006
+      '8':
+        cost: 2400
+        multiplier: 0.0065
+      '9':
+        cost: 2600
+        multiplier: 0.007
+      '10':
+        cost: 2700
+        multiplier: 0.0075
+      '11':
+        cost: 2900
+        multiplier: 0.008
+      '12':
+        cost: 3100
+        multiplier: 0.0085
+      '13':
+        cost: 3300
+        multiplier: 0.0087
+      '14':
+        cost: 3500
+        multiplier: 0.0089
+      '15':
+        cost: 4000
+        multiplier: 0.009
+    material: GOLD_AXE
+    amount: 1
+    data: 0
+    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
+    type: luck
+    functions: []
+  EFFICIENCY:
+    name: '&a&lEfficiency'
+    lore:
+      - '&r'
+      - '&7Mine at a faster speed.'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Cost: &a&l<cost>'
+      - '&7Progress: &a&l<level>&7/&a&l<max-level>'
+      - '&7Multiplier: &a&l<multiplier>&a&lx'
+    amount: 1
+    max-level: 20
+    slot: 13
+    prices:
+      '1':
+        cost: 100
+      '2':
+        cost: 250
+      '3':
+        cost: 300
+      '4':
+        cost: 350
+      '5':
+        cost: 400
+      '6':
+        cost: 450
+      '7':
+        cost: 500
+      '8':
+        cost: 1050
+      '9':
+        cost: 1150
+      '10':
+        cost: 1200
+      '11':
+        cost: 1350
+      '12':
+        cost: 1400
+      '13':
+        cost: 1550
+      '14':
+        cost: 1600
+      '15':
+        cost: 1700
+      '16':
+        cost: 1900
+      '17':
+        cost: 2050
+      '18':
+        cost: 2100
+      '19':
+        cost: 2350
+      '20':
+        cost: 2500
+    material: DIAMOND_PICKAXE
+    data: 0
+    type: enchant:DIG_SPEED
+    functions: []
+  HASTE:
+    name: '&a&lHaste'
+    lore:
+      - '&r'
+      - '&7Increase the speed at which'
+      - '&7your pickaxe swings with this enchant.'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Cost: &a&l<cost>'
+      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
+      - '&7Multiplier: &a&l<multiplier>&a&lx'
+    amount: 1
+    max-level: 5
+    slot: 15
+    prices:
+      '1':
+        cost: 1000
+      '2':
+        cost: 2500
+      '3':
+        cost: 3000
+      '4':
+        cost: 4500
+      '5':
+        cost: 5000
+    material: POTION
+    data: 0
+    type: potionEffect:haste
+    functions: []
+  KEY_HUNTER:
+    name: '&e&lKey Hunter'
+    lore:
+      - '&r'
+      - '&7Find crate keys as you mine.'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Cost: &a&l<cost>'
+      - '&7Progress: &a&l<level>&a&l/&a&l15'
+      - '&7Multiplier: &a&l<multiplier>&a&lx'
+    max-level: 15
+    slot: 28
+    prices:
+      '1':
+        multiplier: 0.002
+        cost: 250
+      '2':
+        multiplier: 0.0004
+        cost: 300
+      '3':
+        multiplier: 0.0006
+        cost: 350
+      '4':
+        multiplier: 0.0008
+        cost: 400
+      '5':
+        multiplier: 0.0009
+        cost: 500
+      '6':
+        multiplier: 0.001
+        cost: 600
+      '7':
+        multiplier: 0.002
+        cost: 650
+      '8':
+        multiplier: 0.003
+        cost: 700
+      '9':
+        multiplier: 0.004
+        cost: 900
+      '10':
+        multiplier: 0.005
+        cost: 1000
+      '11':
+        multiplier: 0.006
+        cost: 1200
+      '12':
+        multiplier: 0.007
+        cost: 2300
+      '13':
+        multiplier: 0.008
+        cost: 2400
+      '14':
+        multiplier: 0.0085
+        cost: 3500
+      '15':
+        multiplier: 0.009
+        cost: 4000
+    material: TRIPWIRE_HOOK
+    data: 0
+    type: command
+    functions:
+      - 'cr give to <player> <key> 1'
+  FORTUNE:
+    name: '&b&lFortune'
+    lore:
+      - '&r'
+      - '&7Increase the amount of blocks'
+      - '&7you get per hit.'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Cost: &a&l<cost>'
+      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
+      - '&7Multiplier: &a&l<multiplier>&a&lx'
+    max-level: 5
+    slot: 21
+    prices:
+      '1':
+        cost: 1000
+      '2':
+        cost: 3500
+      '3':
+        cost: 5000
+      '4':
+        cost: 7500
+      '5':
+        cost: 9000
+    material: QUARTZ
+    data: 0
+    type: enchant:LOOT_BONUS_BLOCKS
+    functions: []
+  ESSENCE_SPIRIT:
+    name: '&e&lEssence Spirit'
+    lore:
+      - '&r'
+      - '&7Chance to receive more'
+      - '&7tokens when mining.'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Cost: &a&l<cost>'
+      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
+      - '&7Multiplier: &a&l<multiplier>&a&l%'
+    max-level: 35
+    slot: 29
+    prices:
+      '1':
+        multiplier: 0.01
+        cost: 100
+      '2':
+        multiplier: 0.02
+        cost: 150
+      '3':
+        multiplier: 0.03
+        cost: 200
+      '4':
+        multiplier: 0.04
+        cost: 250
+      '5':
+        multiplier: 0.05
+        cost: 300
+      '6':
+        multiplier: 0.06
+        cost: 350
+      '7':
+        multiplier: 0.1
+        cost: 400
+      '8':
+        multiplier: 0.11
+        cost: 500
+      '9':
+        multiplier: 0.12
+        cost: 750
+      '10':
+        multiplier: 0.13
+        cost: 800
+      '11':
+        multiplier: 0.14
+        cost: 950
+      '12':
+        multiplier: 0.15
+        cost: 1000
+      '13':
+        multiplier: 0.16
+        cost: 1200
+      '14':
+        multiplier: 0.17
+        cost: 1400
+      '15':
+        multiplier: 0.18
+        cost: 1550
+      '16':
+        multiplier: 0.19
+        cost: 1600
+      '17':
+        multiplier: 0.20
+        cost: 1750
+      '18':
+        multiplier: 0.21
+        cost: 2000
+      '19':
+        multiplier: 0.22
+        cost: 2150
+      '20':
+        multiplier: 0.23
+        cost: 2300
+      '21':
+        multiplier: 0.25
+        cost: 2400
+      '22':
+        multiplier: 0.27
+        cost: 2500
+      '23':
+        multiplier: 0.29
+        cost: 2600
+      '24':
+        multiplier: 0.30
+        cost: 3000
+      '25':
+        multiplier: 0.32
+        cost: 3200
+      '26':
+        multiplier: 0.33
+        cost: 3400
+      '27':
+        multiplier: 0.35
+        cost: 3600
+      '28':
+        multiplier: 0.37
+        cost: 3800
+      '29':
+        multiplier: 0.39
+        cost: 4200
+      '30':
+        multiplier: 0.40
+        cost: 4500
+      '31':
+        multiplier: 0.42
+        cost: 4800
+      '32':
+        multiplier: 0.44
+        cost: 4900
+      '33':
+        multiplier: 0.46
+        cost: 5200
+      '34':
+        multiplier: 0.48
+        cost: 5400
+      '35':
+        multiplier: 0.5
+        cost: 5600
+    material: MAGMA_CREAM
+    data: 0
+    type: tokenfinder
+    functions: []
+  EXPERIENCE:
+    name: '&a&lExperience'
+    lore:
+      - '&r'
+      - '&7Increase the amount of experience'
+      - '&7you get per ore block mined.'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Cost: &a&l<cost>'
+      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
+      - '&7Multiplier: &a&l<multiplier>&a&l%'
+    max-level: 25
+    slot: 14
+    prices:
+      '1':
+        cost: 100
+      '2':
+        cost: 250
+      '3':
+        cost: 300
+      '4':
+        cost: 350
+      '5':
+        cost: 700
+      '6':
+        cost: 950
+      '7':
+        cost: 1000
+      '8':
+        cost: 1350
+      '9':
+        cost: 1750
+      '10':
+        cost: 2000
+      '11':
+        cost: 2150
+      '12':
+        cost: 2200
+      '13':
+        cost: 2750
+      '14':
+        cost: 3000
+      '15':
+        cost: 3100
+      '16':
+        cost: 3200
+      '17':
+        cost: 3250
+      '18':
+        cost: 4300
+      '19':
+        cost: 5350
+      '20':
+        cost: 6500
+      '21':
+        cost: 7700
+      '22':
+        cost: 8850
+      '23':
+        cost: 9000
+      '24':
+        cost: 9100
+      '25':
+        cost: 10000
+    material: NETHER_STAR
+    data: 0
+    type: experience
+    functions: []
+  DAWN:
+    name: '&a&lDawn'
+    lore:
+      - '&r'
+      - '&7Gives a chance to find more tokens in daylight.'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Cost: &a&l<cost>'
+      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
+    max-level: 15
+    slot: 16
+    prices:
+      '1':
+        cost: 2000
+        multiplier: 0.0025
+      '2':
+        cost: 2100
+        multiplier: 0.0028
+      '3':
+        cost: 2300
+        multiplier: 0.0030
+      '4':
+        cost: 2400
+        multiplier: 0.0032
+      '5':
+        cost: 2500
+        multiplier: 0.0034
+      '6':
+        cost: 2700
+        multiplier: 0.0035
+      '7':
+        cost: 2900
+        multiplier: 0.0037
+      '8':
+        cost: 3000
+        multiplier: 0.0039
+      '9':
+        cost: 3100
+        multiplier: 0.0040
+      '10':
+        cost: 3200
+        multiplier: 0.0042
+      '11':
+        cost: 3300
+        multiplier: 0.0044
+      '12':
+        cost: 3350
+        multiplier: 0.0046
+      '13':
+        cost: 3400
+        multiplier: 0.0047
+      '14':
+        cost: 3450
+        multiplier: 0.0048
+      '15':
+        cost: 3500
+        multiplier: 0.0050
+    material: WATCH
+    amount: 1
+    data: 0
+    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
+    type: daylighttokenfinder
+    functions: []
+  ERUPTION:
+    name: '&b&lEruption'
+    lore:
+      - '&r'
+      - '&7Causes a sudden upbreak of helpful potion'
+      - '&7effects for everyone in a radius.'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Cost: &a&l<cost>'
+      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
+    max-level: 5
+    slot: 22
+    prices:
+      '1':
+        cost: 1000
+        value: 3 # duration of potions (seconds)
+        multiplier: 0.0010 # chance to proc
+      '2':
+        cost: 1200
+        value: 5
+        multiplier: 0.0012
+      '3':
+        cost: 1250
+        value: 6
+        multiplier: 0.0015
+      '4':
+        cost: 1500
+        value: 7
+        multiplier: 0.0017
+      '5':
+        cost: 1750
+        value: 8
+        multiplier: 0.0019
+    material: LAVA_BUCKET
+    amount: 1
+    data: 0
+    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
+    type: eruption
+    functions: #list all potion effects here
+      - 'SPEED'
+      - 'JUMP'
+  GRENADE:
+    name: '&e&lGrenade'
+    lore:
+      - '&r'
+      - '&7Right click to throw a grenade that destroys a radius of blocks.'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Cost: &a&l<cost>'
+      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
+    max-level: 5
+    slot: 30
+    prices:
+      '1':
+        cost: 4000
+        multiplier: 60 #cooldown (seconds)
+      '2':
+        cost: 5000
+        multiplier: 50 #cooldown (seconds)
+      '3':
+        cost: 6000
+        multiplier: 40 #cooldown (seconds)
+      '4':
+        cost: 7500
+        multiplier: 30 #cooldown (seconds)
+      '5':
+        cost: 10000
+        multiplier: 20 #cooldown (seconds)
+    material: FIREBALL
+    amount: 1
+    data: 0
+    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
+    type: grenade
+    functions: []
+  NUKE:
+    name: '&e&lNuke'
+    lore:
+      - '&r'
+      - '&7Has a chance to destroy blocks in a radius.'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Cost: &a&l<cost>'
+      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
+    max-level: 5
+    slot: 31
+    prices:
+      '1':
+        cost: 3000
+        multiplier: 0.002 #cooldown (seconds)
+        value: 1
+      '2':
+        cost: 3500
+        multiplier: 0.003 #cooldown (seconds)
+        value: 2
+      '3':
+        cost: 4000
+        multiplier: 0.004 #cooldown (seconds)
+        value: 3
+      '4':
+        cost: 4500
+        multiplier: 0.0045 #cooldown (seconds)
+        value: 4
+      '5':
+        cost: 5000
+        multiplier: 0.005 #cooldown (seconds)
+        value: 5
+    material: REDSTONE
+    amount: 1
+    data: 0
+    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
+    type: nuke
+    functions: []
+  TOKENPOUCH:
+    name: '&e&lToken Pouch'
+    lore:
+      - '&r'
+      - '&7Find token pouches as you mine.'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Cost: &a&l<cost>'
+      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
+      - '&7Multiplier: &a&l<multiplier>&a&lx'
+    max-level: 15
+    slot: 32
+    prices:
+      '1':
+        multiplier: 0.002
+        cost: 250
+      '2':
+        multiplier: 0.0004
+        cost: 300
+      '3':
+        multiplier: 0.0006
+        cost: 350
+      '4':
+        multiplier: 0.0008
+        cost: 400
+      '5':
+        multiplier: 0.0009
+        cost: 500
+      '6':
+        multiplier: 0.001
+        cost: 600
+      '7':
+        multiplier: 0.002
+        cost: 650
+      '8':
+        multiplier: 0.003
+        cost: 700
+      '9':
+        multiplier: 0.004
+        cost: 900
+      '10':
+        multiplier: 0.005
+        cost: 1000
+      '11':
+        multiplier: 0.006
+        cost: 1200
+      '12':
+        multiplier: 0.007
+        cost: 2300
+      '13':
+        multiplier: 0.008
+        cost: 2400
+      '14':
+        multiplier: 0.0085
+        cost: 3500
+      '15':
+        multiplier: 0.009
+        cost: 4000
+    material: TRIPWIRE_HOOK
+    data: 0
+    type: command
+    functions:
+      - 'cr give to <player> <pouch> 1' # pouch = type of pouch (random from tokenpouches list)
+  EXPLOSION:
+    name: '&e&lExplosion'
+    lore:
+      - '&r'
+      - '&7Blows up all blocks in a radius'
+      - '&r'
+      - '&8[&7<progress>&8]'
+      - '&r'
+      - '&7Price: &a&l<cost>'
+      - '&7Progress: &a&l<level>/&a&l<max-level>'
+    max-level: 10
+    slot: 33
+    prices:
+      '1':
+        cost: 4500
+        multiplier: 0.0001 # 0.01% of activating
+      '2':
+        cost: 5750
+        multiplier: 0.0002 # 0.02% of activating
+      '3':
+        cost: 6000
+        multiplier: 0.0003 # 0.03% of activating
+      '4':
+        cost: 7100
+        multiplier: 0.0004 # 0.04% of activating
+      '5':
+        cost: 7200
+        multiplier: 0.0005 # 0.05% of activating
+      '6':
+        cost: 8500
+        multiplier: 0.0006 # 0.06% of activating
+      '7':
+        cost: 8700
+        multiplier: 0.0007 # 0.07% of activating
+      '8':
+        cost: 9000
+        multiplier: 0.0008 # 0.08% of activating
+      '9':
+        cost: 9500
+        multiplier: 0.0009 # 0.09% of activating
+      '10':
+        cost: 10000
+        multiplier: 0.001 # 0.1% of activating
+    material: TNT
+    amount: 1
+    data: 0
+    url: https://textures.minecraft.net/texture/df60e6182cab215d59ea32e1a48a2a6a973d7620936774d58b3fde9efa718123
+    type: explosion
+    functions: []
