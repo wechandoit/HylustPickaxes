@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ShopManager {
     private Main instance;
-    private File itemsFile = new File("plugins/HylustPickaxes/", "shopitems.yml");
+    private File itemsFile = new File("plugins/MoonlightPickaxes/", "shopitems.yml");
     private FileConfiguration itemsData = YamlConfiguration.loadConfiguration(itemsFile);
 
     public List<ShopItem> getShopItems() {
@@ -43,15 +43,15 @@ public class ShopManager {
             e.printStackTrace();
         }
 
-        itemsData.set("shops.dirt.material", Material.QUARTZ.name());
+        itemsData.set("shops.dirt.material", Material.WIND_CHARGE.name());
         itemsData.set("shops.dirt.quantity", 1);
         itemsData.set("shops.dirt.damage", 0);
-        itemsData.set("shops.dirt.name", "nope");
+        itemsData.set("shops.dirt.name", "what the sigma");
         itemsData.set("shops.dirt.lore", Arrays.asList(new String[]{"yahalloooo"}));
         itemsData.set("shops.dirt.slot", 0);
         itemsData.set("shops.dirt.price", 1);
         itemsData.set("shops.dirt.type", "COMMAND");
-        itemsData.set("shops.dirt.commands", Arrays.asList(new String[]{"/say hi", "/kick %player%"}));
+        itemsData.set("shops.dirt.commands", Arrays.asList(new String[]{"kick %player%"}));
 
 
         try {
@@ -129,7 +129,7 @@ public class ShopManager {
                     guiItem.addUnsafeEnchantment(EnchantNames.getEnchantment(en.split(":")[0]), Integer.parseInt(en.split(":")[1]));
                 }
             }
-            lore.add(MiscUtils.chat("&f&lPRICE: &f" + price + " coins"));
+            lore.add(MiscUtils.chat("<white><bold>PRICE: <white>" + price + " coins"));
             if (lore != null) meta.lore(lore);
             guiItem.setItemMeta(meta);
             

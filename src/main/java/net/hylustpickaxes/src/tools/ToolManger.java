@@ -3,6 +3,8 @@ package net.hylustpickaxes.src.tools;
 import net.hylustpickaxes.src.Main;
 import net.hylustpickaxes.src.upgrades.Upgrade;
 import net.hylustpickaxes.src.utils.ItemUtils;
+import net.hylustpickaxes.src.utils.MiscUtils;
+
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -49,8 +51,10 @@ public class ToolManger {
             //gen item
 
             ItemStack item = ItemUtils.getItemStackFromConfig(toolConfig, "item." + type);
-            
-            Main.plugin.getLogger().info(item.toString());
+            List<String> lore = null;
+            if (toolConfig.getStringList("item." + type + ".lore") != null) {
+            	lore = toolConfig.getStringList("item." + type + ".lore");
+            }
             
             NBT.modify(item, toolNBT -> {
             	toolNBT.setBoolean("Unbreakable", true);
@@ -66,7 +70,7 @@ public class ToolManger {
             });
 
             // create tool
-            tools.add(new Tool(item, upgrades, tokenName));
+            tools.add(new Tool(item, upgrades, tokenName, lore));
             tokenTypes.add(tokenName);
         }
         Main.plugin.getLogger().info(tools.size() + " tools loaded!");

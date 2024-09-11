@@ -31,6 +31,10 @@ public class UpgradeManager {
             List<Double> multipliers = new ArrayList<>();
             List<Double> values = new ArrayList<>();
             ItemStack icon = ItemUtils.getItemStackFromConfig(data, "upgrade." + name);
+            List<String> lore = null;
+            if (data.getStringList("upgrade." + name + ".lore") != null) {
+            	lore = data.getStringList("upgrade." + name + ".lore");
+            }
 
             for (int i = 1; i <= maxLevel; i++)
             {
@@ -45,7 +49,7 @@ public class UpgradeManager {
             List<String> functions = data.getStringList("upgrade." + name + ".functions");
             String type = data.getString("upgrade." + name + ".type");
 
-            upgrades.add(new Upgrade(maxLevel, name, costs, multipliers, values, icon, slot, functions, type));
+            upgrades.add(new Upgrade(maxLevel, name, costs, multipliers, values, icon, lore, slot, functions, type));
         }
         Main.plugin.getLogger().info(upgrades.size() + " Upgrades Loaded!");
     }

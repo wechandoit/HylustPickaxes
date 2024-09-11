@@ -119,7 +119,8 @@ public class MiningListener implements Listener {
                                 TNTPrimed tnt = (TNTPrimed) player.getWorld().spawnEntity(block.getLocation(), EntityType.TNT);
                                 tnt.setYield(4);
                                 tnt.setIsIncendiary(false);
-                                tnt.setCustomName(player.getName());
+                                tnt.setSource(player);
+//                                tnt.setCustomName(player.getName());
                                 Main.tntPrimedList.add(tnt);
                             }
                             break;

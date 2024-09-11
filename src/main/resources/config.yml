@@ -1,8 +1,8 @@
 placeholder:
-  maxed-out: '&c&lMAXED OUT'
-  cost: '&a&l<cost> Tokens'
-  filled: '&a|'
-  non-filled: '&7|'
+  maxed-out: '<red><b>MAXED OUT'
+  cost: '<green><b><cost> Tokens<reset>'
+  filled: '<green>|<reset>'
+  non-filled: '<gray>|<reset>'
   bars: 20
 
 #keys from the key hunter enchant
@@ -17,19 +17,19 @@ tokenpouches:
 
 #messages
 messages:
-  no_permission: '&cYou don''t have the permission to do that.'
-  invalid-number: '&c''<argument>'' has to be a number'
-  invalid-command-usage: '&aIncorrect Usage: do /hylustpickaxes <add/remove/set> <player> <tokenName> <amount> or /hylustpickaxes give <player> <toolName> <amount>'
-  player-only: '&cThis command is for players only!'
-  reload: '&aConfig was reloaded'
-  player-not-online: '&cPlayer seems to be not online!'
-  maxed-out: '&cYou have maxed out on this enchant!'
-  not-enough-tokens: '&cYou do not have enough tokens!'
-  enchant-bought: '&aYou have bought &a&n<enchant>&a for &a&n<amount>&a!'
-  get-tokens: '&a<player> has <amount> tokens.'
-  invalid-player: '&cPlayer is invalid!'
-  shop-bought-msg: '&aYou bought <item>&a for <cost>&a.'
-  cooldown-msg: '&cThere are <time> seconds remaining before you can use this again!'
+  no_permission: '<red>You don''t have the permission to do that.'
+  invalid-number: '<red>''<argument>'' has to be a number'
+  invalid-command-usage: '<green>Incorrect Usage: do /tokens <add/remove/set> <player> <amount> or /moonlightpickaxes give <player> <toolName> <amount>'
+  player-only: '<red>This command is for players only!'
+  reload: '<green>Config was reloaded'
+  player-not-online: '<red>Player seems to be not online!'
+  maxed-out: '<red>You have maxed out on this enchant!'
+  not-enough-tokens: '<red>You do not have enough tokens!'
+  enchant-bought: '<green>You have bought <green><enchant><green> for <green><amount><green>!'
+  get-tokens: '<green><player> has <amount> tokens.'
+  invalid-player: '<red>Player is invalid!'
+  shop-bought-msg: '<green>You bought <item><green> for <cost><green>.'
+  cooldown-msg: '<red>There are <time> seconds remaining before you can use this again!'
 
 features:
   #shift-right or command or both
@@ -37,12 +37,12 @@ features:
 
 #shop
 shop:
-  name: '&8Token Shop'
+  name: '<dark_gray>Token Shop'
   rows: 3
   fills:
     '1':
       material: GRAY_STAINED_GLASS_PANE
-      name: ' '
+      name: '<reset>'
       lore: [ ]
       slots:
         - 0
@@ -75,12 +75,12 @@ shop:
 
 #gui
 menu:
-  name: '&8Upgrade Menu'
+  name: '<dark_gray>Upgrade Menu'
   rows: 5
   fills:
     '1':
       material: GRAY_STAINED_GLASS_PANE
-      name: ' '
+      name: '<reset>'
       lore: []
       slots:
         - 0
@@ -128,14 +128,14 @@ menu:
 item:
   #tool name must equal token name
   pickaxe:
-    name: '&3&lUPGRADEABLE PICKAXE'
+    name: '<aqua><bold>UPGRADEABLE PICKAXE'
     lore:
-      - '&7'
-      - '&7This pickaxe can be upgraded!'
-      - '&7Mine blocks to get tokens!'
-      - '&7Shift-Right&7 to open the upgrade menu!'
-      - '&7'
-      - '&7Blocks Mined:&a <value>'
+      - '<reset>'
+      - '<gray>This pickaxe can be upgraded!'
+      - '<gray>Mine blocks to get tokens!'
+      - '<gray>Shift-Right<gray> to open the upgrade menu!'
+      - '<reset>'
+      - '<gray>Blocks Mined:<reset><green> <value>'
     material: DIAMOND_PICKAXE
     data: 0
     #identifier for the tokens for this pickaxe
@@ -146,7 +146,7 @@ item:
       - 'EFFICIENCY'
       - 'HASTE'
       - 'ESSENCE_SPIRIT'
-      - 'KEY_HUNTER'
+#      - 'KEY_HUNTER'
       - 'FORTUNE'
       - 'EXPERIENCE'
 #      - 'AUTOSELL'
@@ -164,17 +164,17 @@ item:
 #upgrades/enchants
 upgrade:
 #  AUTOSELL:
-#    name: '&a&lAutoSell'
+#    name: '<green><bold>AutoSell'
 #    lore:
-#      - '&r'
-#      - '&7Auto-Sell all blocks you mine.'
-#      - '&7This enchantment works with all other'
-#      - '&7pickaxe enchantments.'
-#      - '&r'
-#      - '&8[&7<progress>&8]'
-#      - '&r'
-#      - '&7Price: &a&l<cost>'
-#      - '&7Progress: &a&l<level>/&a&l<max-level>'
+#      - '<reset>'
+#      - '<gray>Auto-Sell all blocks you mine.'
+#      - '<gray>This enchantment works with all other'
+#      - '<gray>pickaxe enchantments.'
+#      - '<reset>'
+#      - '<dark_gray>[<gray><progress><dark_gray>]'
+#      - '<reset>'
+#      - '<gray>Price: <green><bold><cost>'
+#      - '<gray>Progress: <green><bold><level>/<green><bold><max-level>'
 #    max-level: 1
 #    slot: 10
 #    prices:
@@ -187,15 +187,15 @@ upgrade:
 #    type: autosell
 #    functions: []
   AUTOSMELT:
-    name: '&b&lAutoSmelt'
+    name: '<aqua><bold>AutoSmelt'
     lore:
-      - '&r'
-      - '&7Auto-Smelt all blocks you mine.'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Price: &a&l<cost>'
-      - '&7Progress: &a&l<level>/&a&l<max-level>'
+      - '<reset>'
+      - '<gray>Auto-Smelt all blocks you mine.'
+      - '<reset>'
+      - '<dark_gray>[<reset><progress><dark_gray>]'
+      - '<reset>'
+      - '<gray>Price: <cost>'
+      - '<gray>Progress:<reset> <green><bold><level>/<max-level>'
     max-level: 1
     slot: 20
     prices:
@@ -208,16 +208,16 @@ upgrade:
     type: autosmelt
     functions: []
   TRENCH:
-    name: '&a&lTrench'
+    name: '<green><bold>Trench'
     lore:
-      - '&r'
-      - '&7Mines all blocks in a radius'
-      - '&7If you have any questions message a staff member'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Price: &a&l<cost>'
-      - '&7Progress: &a&l<level>/&a&l<max-level>'
+      - '<reset>'
+      - '<gray>Mines all blocks in a radius'
+      - '<gray>If you have any questions message a staff member'
+      - '<reset>'
+      - '<dark_gray>[<reset><progress><dark_gray>]'
+      - '<reset>'
+      - '<gray>Price: <cost>'
+      - '<gray>Progress:<reset> <green><bold><level>/<max-level>'
     max-level: 10
     slot: 11
     prices:
@@ -268,15 +268,15 @@ upgrade:
     type: trench
     functions: []
 #  CHARITY:
-#    name: '&a&lCharity'
+#    name: '<green><bold>Charity'
 #    lore:
-#      - '&r'
-#      - '&7A chance to give everyone on the server money!'
-#      - '&r'
-#      - '&8[&7<progress>&8]'
-#      - '&r'
-#      - '&7Price: &a&l<cost>'
-#      - '&7Progress: &a&l<level>/&a&l<max-level>'
+#      - '<reset>'
+#      - '<gray>A chance to give everyone on the server money!'
+#      - '<reset>'
+#      - '<dark_gray>[<gray><progress><dark_gray>]'
+#      - '<reset>'
+#      - '<gray>Price: <green><bold><cost>'
+#      - '<gray>Progress: <green><bold><level>/<green><bold><max-level>'
 #    max-level: 15
 #    slot: 12
 #    prices:
@@ -332,16 +332,16 @@ upgrade:
 #    type: charity
 #    functions: []
 #  LUCK:
-#    name: '&b&lLuck'
+#    name: '<aqua><bold>Luck'
 #    lore:
-#      - '&r'
-#      - '&7Finds random amounts of'
-#      - '&7money when mining ores.'
-#      - '&r'
-#      - '&8[&7<progress>&8]'
-#      - '&r'
-#      - '&7Price: &a&l<cost>'
-#      - '&7Progress: &a&l<level>/&a&l<max-level>'
+#      - '<reset>'
+#      - '<gray>Finds random amounts of'
+#      - '<gray>money when mining ores.'
+#      - '<reset>'
+#      - '<dark_gray>[<gray><progress><dark_gray>]'
+#      - '<reset>'
+#      - '<gray>Price: <green><bold><cost>'
+#      - '<gray>Progress: <green><bold><level>/<green><bold><max-level>'
 #    max-level: 15
 #    slot: 19
 #    prices:
@@ -397,16 +397,16 @@ upgrade:
 #    type: luck
 #    functions: []
   EFFICIENCY:
-    name: '&a&lEfficiency'
+    name: '<green><bold>Efficiency'
     lore:
-      - '&r'
-      - '&7Mine at a faster speed.'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Cost: &a&l<cost>'
-      - '&7Progress: &a&l<level>&7/&a&l<max-level>'
-      - '&7Multiplier: &a&l<multiplier>&a&lx'
+      - '<reset>'
+      - '<gray>Mine at a faster speed.'
+      - '<reset>'
+      - '<dark_gray>[<reset><progress><dark_gray>]'
+      - '<reset>'
+      - '<gray>Price: <cost>'
+      - '<gray>Progress:<reset> <green><bold><level><reset>/<green><bold><max-level>'
+      - '<gray>Multiplier:<reset> <green><bold><multiplier><green><bold>x'
     amount: 1
     max-level: 20
     slot: 13
@@ -456,17 +456,17 @@ upgrade:
     type: enchant:DIG_SPEED
     functions: []
   HASTE:
-    name: '&a&lHaste'
+    name: '<green><bold>Haste'
     lore:
-      - '&r'
-      - '&7Increase the speed at which'
-      - '&7your pickaxe swings with this enchant.'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Cost: &a&l<cost>'
-      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
-      - '&7Multiplier: &a&l<multiplier>&a&lx'
+      - '<reset>'
+      - '<gray>Increase the speed at which'
+      - '<gray>your pickaxe swings with this enchant.'
+      - '<reset>'
+      - '<dark_gray>[<reset><progress><dark_gray>]'
+      - '<reset>'
+      - '<gray>Price: <cost>'
+      - '<gray>Progress:<reset> <green><bold><level>/<max-level>'
+      - '<gray>Multiplier: <green><bold><multiplier><green><bold>x'
     amount: 1
     max-level: 5
     slot: 15
@@ -485,82 +485,82 @@ upgrade:
     data: 0
     type: potionEffect:haste
     functions: []
-  KEY_HUNTER:
-    name: '&e&lKey Hunter'
-    lore:
-      - '&r'
-      - '&7Find crate keys as you mine.'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Cost: &a&l<cost>'
-      - '&7Progress: &a&l<level>&a&l/&a&l15'
-      - '&7Multiplier: &a&l<multiplier>&a&lx'
-    max-level: 15
-    slot: 28
-    prices:
-      '1':
-        multiplier: 0.002
-        cost: 250
-      '2':
-        multiplier: 0.0004
-        cost: 300
-      '3':
-        multiplier: 0.0006
-        cost: 350
-      '4':
-        multiplier: 0.0008
-        cost: 400
-      '5':
-        multiplier: 0.0009
-        cost: 500
-      '6':
-        multiplier: 0.001
-        cost: 600
-      '7':
-        multiplier: 0.002
-        cost: 650
-      '8':
-        multiplier: 0.003
-        cost: 700
-      '9':
-        multiplier: 0.004
-        cost: 900
-      '10':
-        multiplier: 0.005
-        cost: 1000
-      '11':
-        multiplier: 0.006
-        cost: 1200
-      '12':
-        multiplier: 0.007
-        cost: 2300
-      '13':
-        multiplier: 0.008
-        cost: 2400
-      '14':
-        multiplier: 0.0085
-        cost: 3500
-      '15':
-        multiplier: 0.009
-        cost: 4000
-    material: TRIPWIRE_HOOK
-    data: 0
-    type: command
-    functions:
-      - 'cr give to <player> <key> 1'
+#  KEY_HUNTER:
+#    name: '<yellow><bold>Key Hunter'
+#    lore:
+#      - '<reset>'
+#      - '<gray>Find crate keys as you mine.'
+#      - '<reset>'
+#      - '<dark_gray>[<gray><progress><dark_gray>]'
+#      - '<reset>'
+#      - '<gray>Cost: <green><bold><cost>'
+#      - '<gray>Progress: <green><bold><level><green><bold>/<green><bold>15'
+#      - '<gray>Multiplier: <green><bold><multiplier><green><bold>x'
+#    max-level: 15
+#    slot: 28
+#    prices:
+#      '1':
+#        multiplier: 0.002
+#        cost: 250
+#      '2':
+#        multiplier: 0.0004
+#        cost: 300
+#      '3':
+#        multiplier: 0.0006
+#        cost: 350
+#      '4':
+#        multiplier: 0.0008
+#        cost: 400
+#      '5':
+#        multiplier: 0.0009
+#        cost: 500
+#      '6':
+#        multiplier: 0.001
+#        cost: 600
+#      '7':
+#        multiplier: 0.002
+#        cost: 650
+#      '8':
+#        multiplier: 0.003
+#        cost: 700
+#      '9':
+#        multiplier: 0.004
+#        cost: 900
+#      '10':
+#        multiplier: 0.005
+#        cost: 1000
+#      '11':
+#        multiplier: 0.006
+#        cost: 1200
+#      '12':
+#        multiplier: 0.007
+#        cost: 2300
+#      '13':
+#        multiplier: 0.008
+#        cost: 2400
+#      '14':
+#        multiplier: 0.0085
+#        cost: 3500
+#      '15':
+#        multiplier: 0.009
+#        cost: 4000
+#    material: TRIPWIRE_HOOK
+#    data: 0
+#    type: command
+#    functions:
+#      - 'cr give to <player> <key> 1'
   FORTUNE:
-    name: '&b&lFortune'
+    name: '<aqua><bold>Fortune'
     lore:
-      - '&r'
-      - '&7Increase the amount of blocks'
-      - '&7you get per hit.'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Cost: &a&l<cost>'
-      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
-      - '&7Multiplier: &a&l<multiplier>&a&lx'
+      - '<reset>'
+      - '<gray>Increase the amount of blocks'
+      - '<gray>you get per hit.'
+      - '<reset>'
+      - '<dark_gray>[<reset><progress><dark_gray>]'
+      - '<reset>'
+      - '<gray>Price: <cost>'
+      - '<gray>Progress:<reset> <green><bold><level><reset>/<green><bold><max-level>'
+      - '<gray>Multiplier: <green><bold><multiplier><green><bold>x'
     max-level: 5
     slot: 21
     prices:
@@ -579,17 +579,17 @@ upgrade:
     type: enchant:LOOT_BONUS_BLOCKS
     functions: []
   ESSENCE_SPIRIT:
-    name: '&e&lEssence Spirit'
+    name: '<yellow><bold>Essence Spirit'
     lore:
-      - '&r'
-      - '&7Chance to receive more'
-      - '&7tokens when mining.'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Cost: &a&l<cost>'
-      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
-      - '&7Multiplier: &a&l<multiplier>&a&l%'
+      - '<reset>'
+      - '<gray>Chance to receive more'
+      - '<gray>tokens when mining.'
+      - '<reset>'
+      - '<dark_gray>[<reset><progress><dark_gray>]'
+      - '<reset>'
+      - '<gray>Price: <cost>'
+      - '<gray>Progress:<reset> <green><bold><level>/<max-level>'
+      - '<gray>Multiplier: <green><bold><multiplier><green><bold>%'
     max-level: 35
     slot: 29
     prices:
@@ -703,17 +703,17 @@ upgrade:
     type: tokenfinder
     functions: []
   EXPERIENCE:
-    name: '&a&lExperience'
+    name: '<green><bold>Experience'
     lore:
-      - '&r'
-      - '&7Increase the amount of experience'
-      - '&7you get per ore block mined.'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Cost: &a&l<cost>'
-      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
-      - '&7Multiplier: &a&l<multiplier>&a&l%'
+      - '<reset>'
+      - '<gray>Increase the amount of experience'
+      - '<gray>you get per ore block mined.'
+      - '<reset>'
+      - '<dark_gray>[<reset><progress><dark_gray>]'
+      - '<reset>'
+      - '<gray>Price: <cost>'
+      - '<gray>Progress:<reset> <green><bold><level>/<max-level>'
+      - '<gray>Multiplier: <green><bold><multiplier><green><bold>%'
     max-level: 25
     slot: 14
     prices:
@@ -772,15 +772,15 @@ upgrade:
     type: experience
     functions: []
   DAWN:
-    name: '&a&lDawn'
+    name: '<green><bold>Dawn'
     lore:
-      - '&r'
-      - '&7Gives a chance to find more tokens in daylight.'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Cost: &a&l<cost>'
-      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
+      - '<reset>'
+      - '<gray>Gives a chance to find more tokens in daylight.'
+      - '<reset>'
+      - '<dark_gray>[<reset><progress><dark_gray>]'
+      - '<reset>'
+      - '<gray>Price: <cost>'
+      - '<gray>Progress:<reset> <green><bold><level>/<max-level>'
     max-level: 15
     slot: 16
     prices:
@@ -836,16 +836,16 @@ upgrade:
     type: daylighttokenfinder
     functions: []
   ERUPTION:
-    name: '&b&lEruption'
+    name: '<aqua><bold>Eruption'
     lore:
-      - '&r'
-      - '&7Causes a sudden upbreak of helpful potion'
-      - '&7effects for everyone in a radius.'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Cost: &a&l<cost>'
-      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
+      - '<reset>'
+      - '<gray>Causes a sudden upbreak of helpful potion'
+      - '<gray>effects for everyone in a radius.'
+      - '<reset>'
+      - '<dark_gray>[<reset><progress><dark_gray>]'
+      - '<reset>'
+      - '<gray>Price: <cost>'
+      - '<gray>Progress:<reset> <green><bold><level>/<max-level>'
     max-level: 5
     slot: 22
     prices:
@@ -878,15 +878,15 @@ upgrade:
       - 'SPEED'
       - 'JUMP'
   GRENADE:
-    name: '&e&lGrenade'
+    name: '<yellow><bold>Grenade'
     lore:
-      - '&r'
-      - '&7Right click to throw a grenade that destroys a radius of blocks.'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Cost: &a&l<cost>'
-      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
+      - '<reset>'
+      - '<gray>Right click to throw a grenade that destroys a radius of blocks.'
+      - '<reset>'
+      - '<dark_gray>[<reset><progress><dark_gray>]'
+      - '<reset>'
+      - '<gray>Price: <cost>'
+      - '<gray>Progress:<reset> <green><bold><level>/<max-level>'
     max-level: 5
     slot: 30
     prices:
@@ -912,15 +912,15 @@ upgrade:
     type: grenade
     functions: []
   NUKE:
-    name: '&e&lNuke'
+    name: '<yellow><bold>Nuke'
     lore:
-      - '&r'
-      - '&7Has a chance to destroy blocks in a radius.'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Cost: &a&l<cost>'
-      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
+      - '<reset>'
+      - '<gray>Has a chance to destroy blocks in a radius.'
+      - '<reset>'
+      - '<dark_gray>[<reset><progress><dark_gray>]'
+      - '<reset>'
+      - '<gray>Price: <cost>'
+      - '<gray>Progress:<reset> <green><bold><level>/<max-level>'
     max-level: 5
     slot: 31
     prices:
@@ -951,16 +951,16 @@ upgrade:
     type: nuke
     functions: []
   TOKENPOUCH:
-    name: '&e&lToken Pouch'
+    name: '<yellow><bold>Token Pouch'
     lore:
-      - '&r'
-      - '&7Find token pouches as you mine.'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Cost: &a&l<cost>'
-      - '&7Progress: &a&l<level>&a&l/&a&l<max-level>'
-      - '&7Multiplier: &a&l<multiplier>&a&lx'
+      - '<reset>'
+      - '<gray>Find token pouches as you mine.'
+      - '<reset>'
+      - '<dark_gray>[<reset><progress><dark_gray>]'
+      - '<reset>'
+      - '<gray>Price: <cost>'
+      - '<gray>Progress:<reset> <green><bold><level>/<max-level>'
+      - '<gray>Multiplier:<reset> <green><bold><multiplier><green><bold>x'
     max-level: 15
     slot: 32
     prices:
@@ -1015,48 +1015,48 @@ upgrade:
     functions:
       - 'cr give to <player> <pouch> 1' # pouch = type of pouch (random from tokenpouches list)
   EXPLOSION:
-    name: '&e&lExplosion'
+    name: '<yellow><bold>Explosion'
     lore:
-      - '&r'
-      - '&7Blows up all blocks in a radius'
-      - '&r'
-      - '&8[&7<progress>&8]'
-      - '&r'
-      - '&7Price: &a&l<cost>'
-      - '&7Progress: &a&l<level>/&a&l<max-level>'
+      - '<reset>'
+      - '<gray>Blows up all blocks in a radius'
+      - '<reset>'
+      - '<dark_gray>[<reset><progress><dark_gray>]'
+      - '<reset>'
+      - '<gray>Price: <cost>'
+      - '<gray>Progress:<reset> <green><bold><level>/<max-level>'
     max-level: 10
     slot: 33
     prices:
       '1':
         cost: 4500
-        multiplier: 0.0001 # 0.01% of activating
+        multiplier: 1 # 0.01% of activating
       '2':
         cost: 5750
         multiplier: 0.0002 # 0.02% of activating
       '3':
         cost: 6000
-        multiplier: 0.0003 # 0.03% of activating
+        multiplier: 1 # 0.03% of activating
       '4':
         cost: 7100
-        multiplier: 0.0004 # 0.04% of activating
+        multiplier: 1 # 0.04% of activating
       '5':
         cost: 7200
-        multiplier: 0.0005 # 0.05% of activating
+        multiplier: 1 # 0.05% of activating
       '6':
         cost: 8500
-        multiplier: 0.0006 # 0.06% of activating
+        multiplier: 1 # 0.06% of activating
       '7':
         cost: 8700
-        multiplier: 0.0007 # 0.07% of activating
+        multiplier: 1 # 0.07% of activating
       '8':
         cost: 9000
-        multiplier: 0.0008 # 0.08% of activating
+        multiplier: 1 # 0.08% of activating
       '9':
         cost: 9500
-        multiplier: 0.0009 # 0.09% of activating
+        multiplier: 1 # 0.09% of activating
       '10':
         cost: 10000
-        multiplier: 0.001 # 0.1% of activating
+        multiplier: 1 # 0.1% of activating
     material: TNT
     amount: 1
     data: 0

@@ -66,7 +66,7 @@ public class ProfileManager {
             }
             profiles.add(profile);
         }
-        System.out.println("[HylustPickaxes] Loaded " + profiles.size() + " profiles!");
+        Main.plugin.getLogger().info("Loaded " + profiles.size() + " profiles!");
     }
 
     public Profile getProfile(UUID uuid) {

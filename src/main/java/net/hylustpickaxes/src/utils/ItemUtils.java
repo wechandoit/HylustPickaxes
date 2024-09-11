@@ -3,6 +3,7 @@ package net.hylustpickaxes.src.utils;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import net.hylustpickaxes.src.Main;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -39,7 +40,7 @@ public class ItemUtils {
 
     public static ItemStack getItemStack(ItemStack itemStack, String name, List<Component> lore) {
         ItemMeta meta = itemStack.getItemMeta();
-        if (name != null && !name.equals("")) meta.displayName(MiscUtils.chat(name));
+        if (name != null && !name.equals("")) meta.displayName(MiscUtils.chat(name).decoration(TextDecoration.ITALIC, false));
         if (lore != null || !lore.isEmpty()) {
             meta.lore(lore);
         }
@@ -49,7 +50,7 @@ public class ItemUtils {
 
     public static ItemStack getItemStack(ItemStack itemStack, String name, List<Component> lore, boolean hideEnchants) {
         ItemMeta meta = itemStack.getItemMeta();
-        if (name != null && !name.equals("")) meta.displayName(MiscUtils.chat(name));
+        if (name != null && !name.equals("")) meta.displayName(MiscUtils.chat(name).decoration(TextDecoration.ITALIC, false));
         if (lore != null || !lore.isEmpty()) {
             meta.lore(lore);
             if (hideEnchants) meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);

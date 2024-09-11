@@ -19,7 +19,7 @@ import java.util.*;
 
 public class MiscUtils {
     public static Component chat(String message) {
-    	return Main.mm.deseializeOrNull(message);
+    	return Main.mm.deserialize(message);
     }
 
     public static boolean getBooleanFromWeightedChance(double chance, Random random) {

@@ -6,6 +6,8 @@ import net.hylustpickaxes.src.shop.ShopItem;
 import net.hylustpickaxes.src.upgrades.Upgrade;
 import net.hylustpickaxes.src.utils.MiscUtils;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -43,12 +45,15 @@ public class GUIManager {
             ItemMeta meta = icon.getItemMeta();
             List<Component> lore = new ArrayList<>();
             int level = NBT.get(mainHand, nbt -> (int) nbt.getInteger("upgrade." + upgrade.getName())); // nbt.getInt("upgrade." + upgrade.getName());
-            for (String line : meta.getLore()) {
-            	String message = line.replaceAll("<cost>", level == upgrade.getMaxLevel() ? ConfigData.maxedOutGUIText : ConfigData.costString.replaceAll("<cost>", String.valueOf((int) upgrade.getCost(level).doubleValue()))).replaceAll("<multiplier>", df.format(upgrade.getMultiplier(level)))
-                        .replaceAll("<level>", String.valueOf(level)).replaceAll("<progress>", MiscUtils.getStatusBar(level, upgrade.getMaxLevel()))
-                        .replaceAll("<multiplier_chance>", df.format(upgrade.getMultiplier(level) * 100)
-                        .replaceAll("<max-level>", String.valueOf(upgrade.getMaxLevel())));
-                lore.add(MiscUtils.chat(message));
+            for (String line : upgrade.getLore()) {
+            	lore.add(Main.mm.deserialize(line,
+            			Placeholder.parsed("cost", level == upgrade.getMaxLevel() ? ConfigData.maxedOutGUIText : ConfigData.costString.replaceAll("<cost>", String.valueOf((int) upgrade.getCost(level).doubleValue()))),
+            			Placeholder.parsed("multiplier", df.format(upgrade.getMultiplier(level))),
+            			Placeholder.parsed("level", String.valueOf(level)),
+            			Placeholder.parsed("progress", MiscUtils.getStatusBar(level, upgrade.getMaxLevel())),
+            			Placeholder.parsed("multiplier_chance", df.format(upgrade.getMultiplier(level) * 100)),
+            			Placeholder.parsed("max-level", String.valueOf(upgrade.getMaxLevel()))
+            	).decoration(TextDecoration.ITALIC, false));
             }
             meta.lore(lore);
             icon.setItemMeta(meta);
@@ -56,7 +61,6 @@ public class GUIManager {
             NBT.modify(icon, iconNBT -> {
             	iconNBT.setInteger("upgrade." + upgrade.getName(), level);
             	iconNBT.setString("upgrade.name", upgrade.getName());
-            	
             });
 
             inv.setItem(upgrade.getSlot(), icon);

@@ -12,17 +12,19 @@ public class Upgrade {
     private List<Double> multiplier;
     private List<Double> values;
     private ItemStack icon;
+    private List<String> lore;
     private int slot;
     private List<String> function;
     private String type;
 
-    public Upgrade(int maxLevel, String name, List<Double> costs, List<Double> multiplier, List<Double> values, ItemStack icon, int slot, List<String> function, String type) {
+    public Upgrade(int maxLevel, String name, List<Double> costs, List<Double> multiplier, List<Double> values, ItemStack icon, List<String> lore, int slot, List<String> function, String type) {
         this.maxLevel = maxLevel;
         this.name = name;
         this.costs = costs;
         this.multiplier = multiplier;
         this.values = values;
         this.icon = icon;
+        this.lore = lore;
         this.slot = slot;
         this.function = function;
         this.type = type;
@@ -94,6 +96,10 @@ public class Upgrade {
 
     public void setIcon(ItemStack icon) {
         this.icon = icon;
+    }
+    
+    public List<String> getLore() {
+    	return lore;
     }
 
     public List<String> getFunction() {

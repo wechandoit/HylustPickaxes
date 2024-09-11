@@ -1,10 +1,11 @@
 package net.hylustpickaxes.src.tools;
 
+import net.hylustpickaxes.src.Main;
 import net.hylustpickaxes.src.upgrades.Upgrade;
 import net.hylustpickaxes.src.utils.EnchantNames;
-import net.hylustpickaxes.src.utils.MiscUtils;
 import net.kyori.adventure.text.Component;
-
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -18,11 +19,13 @@ public class Tool {
     private ItemStack item;
     private List<Upgrade> upgrades;
     private String tokenName;
+    private List<String> lore;
 
-    public Tool(ItemStack item, List<Upgrade> upgrades, String tokenName) {
+    public Tool(ItemStack item, List<Upgrade> upgrades, String tokenName, List<String> lore) {
         this.item = item;
         this.upgrades = upgrades;
         this.tokenName = tokenName;
+        this.lore = lore;
     }
 
     public String getTokenName() {
@@ -32,20 +35,23 @@ public class Tool {
     public void setTokenName(String tokenName) {
         this.tokenName = tokenName;
     }
+    
+    public List<String> getLore() {
+    	return lore;
+    }
 
     public ItemStack getItem(double multi, int value, double totalSoldPrice, ItemStack previousItem) {
-        DecimalFormat df = new DecimalFormat("#,###.00");
         ItemStack copy = item.clone();
         List<Component> lore = new ArrayList<>();
-        if (item.getItemMeta().hasLore()) {
-	        for (Component line : item.getItemMeta().lore()) {
-	            String lineCopy = line.toString().replaceAll("<multiplier>", String.valueOf(multi)).replaceAll("<sold>", df.format(totalSoldPrice)).replaceAll("<value>", String.valueOf(value));
-	            lore.add(MiscUtils.chat(lineCopy));
+        if (this.lore != null && !this.lore.isEmpty()) {
+	        for (String line : this.lore) {
+	            lore.add(Main.mm.deserialize(line, Placeholder.unparsed("value", String.valueOf(value))).decoration(TextDecoration.ITALIC, false));
 	        }
         }
 
         ItemMeta meta = copy.getItemMeta();
         meta.lore(lore);
+        meta.setUnbreakable(true);
         copy.setItemMeta(meta);
         NBT.modify(copy, toolNBT -> {
 	        toolNBT.setInteger("value", value);

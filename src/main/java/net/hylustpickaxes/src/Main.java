@@ -3,11 +3,13 @@ package net.hylustpickaxes.src;
 import net.hylustpickaxes.src.commands.MoonlightPickaxes;
 import net.hylustpickaxes.src.commands.Tokens;
 import net.hylustpickaxes.src.commands.UpgradeCmd;
+import net.hylustpickaxes.src.config.ConfigData;
 import net.hylustpickaxes.src.config.ConfigHandler;
 import net.hylustpickaxes.src.listener.InventoryListener;
 import net.hylustpickaxes.src.listener.MiningListener;
 import net.hylustpickaxes.src.listener.PlayerListener;
 import net.hylustpickaxes.src.listener.CustomEventListener;
+import net.hylustpickaxes.src.profiles.Profile;
 import net.hylustpickaxes.src.profiles.ProfileManager;
 import net.hylustpickaxes.src.shop.ShopManager;
 import net.hylustpickaxes.src.tools.ToolManger;
@@ -16,6 +18,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Fireball;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -87,6 +90,13 @@ public class Main extends JavaPlugin {
         profileManager = new ProfileManager();
         configHandler = new ConfigHandler(this);
         shopManager = new ShopManager(this);
+        
+        for (Player player : Bukkit.getOnlinePlayers()) {
+	    	Profile profile = new Profile(player.getUniqueId());
+	        if (Main.getProfileManager().getProfile(player) == null) {
+	            Main.getProfileManager().getProfiles().add(profile);
+	        }
+    	}
     }
 
     public void onDisable() {
@@ -111,7 +121,7 @@ public class Main extends JavaPlugin {
 
     public void loadCommands() {
         getServer().getPluginCommand("moonlightpickaxes").setExecutor(new MoonlightPickaxes());
-        getServer().getPluginCommand("upgrade").setExecutor(new UpgradeCmd());
+        if (ConfigData.accessUpgradeMenu.equalsIgnoreCase("both") || ConfigData.accessUpgradeMenu.equalsIgnoreCase("command")) getServer().getPluginCommand("upgrade").setExecutor(new UpgradeCmd());
         getServer().getPluginCommand("tokens").setExecutor(new Tokens());
     }
 
